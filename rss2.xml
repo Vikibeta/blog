@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/css" href="/public/css/rss.css" ?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title><![CDATA[小胡子哥的个人网站]]></title>
+    <link>http://www.barretlee.com/</link>
+    <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
+    <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
+    <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
+    <pubDate>Sun Jun 04 2017 13:48:24 GMT+0800 (CST)</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[通过 admin 后台管理 hexo 博客]]></title>
+      <link>http://www.barretlee.com/blog/2017/06/04/admin-platform-manage-hexo-blog/</link>
+      <guid>http://www.barretlee.com/blog/2017/06/04/admin-platform-manage-hexo-blog/</guid>
+      <pubDate>Sun Jun 04 2017 13:06:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[小胡子哥的个人网站]]>
+      
+      </description>
+      <content:encoded><![CDATA[小胡子哥的个人网站]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/06/04/admin-platform-manage-hexo-blog/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[为 Hexo 博客增加一个站内搜索]]></title>
+      <link>http://www.barretlee.com/blog/2017/06/04/hexo-search-insite/</link>
+      <guid>http://www.barretlee.com/blog/2017/06/04/hexo-search-insite/</guid>
+      <pubDate>Sun Jun 04 2017 12:30:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[description]]>
+      
+      </description>
+      <content:encoded><![CDATA[description]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/06/04/hexo-search-insite/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[我眼中的前端九段]]></title>
+      <link>http://www.barretlee.com/blog/2017/06/03/fe-nine/</link>
+      <guid>http://www.barretlee.com/blog/2017/06/03/fe-nine/</guid>
+      <pubDate>Sat Jun 03 2017 14:28:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[前端是技术岗，是为解决公司业务而设立的工种，非要用类似围棋九段来划分能力，那也需要从更加全面的角度去切割。我也尝试划出九段，给大家参考]]>
+      
+      </description>
+      <content:encoded><![CDATA[前端是技术岗，是为解决公司业务而设立的工种，非要用类似围棋九段来划分能力，那也需要从更加全面的角度去切割。我也尝试划出九段，给大家参考]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/06/03/fe-nine/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Wordpress 本地调试]]></title>
+      <link>http://www.barretlee.com/blog/2017/05/01/wp-local-development/</link>
+      <guid>http://www.barretlee.com/blog/2017/05/01/wp-local-development/</guid>
+      <pubDate>Mon May 01 2017 23:25:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[最近准备把博客迁移到 Wordpress 上，在主机上部署好了 Wordpress 后，遇到了一个头疼的问题，我期望将线上的环境同步一份到本地，本地代码与服务器保持同步，本地修改后可以及时预览。]]>
+      
+      </description>
+      <content:encoded><![CDATA[最近准备把博客迁移到 Wordpress 上，在主机上部署好了 Wordpress 后，遇到了一个头疼的问题，我期望将线上的环境同步一份到本地，本地代码与服务器保持同步，本地修改后可以及时预览。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/05/01/wp-local-development/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[理解 Gulp 和 Webpack]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/</guid>
+      <pubDate>Thu Apr 27 2017 12:50:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[Gulp 和 webpack 之间的关系是十分暧昧的，却也经常被人误解，以为它俩是竞争关系，其实不然。]]>
+      
+      </description>
+      <content:encoded><![CDATA[Gulp 和 webpack 之间的关系是十分暧昧的，却也经常被人误解，以为它俩是竞争关系，其实不然。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[熟练工如何拔高 & 零碎知识的整理]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/26/about-improve/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/26/about-improve/</guid>
+      <pubDate>Wed Apr 26 2017 12:08:11 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[整理了一条圈子里头一位朋友的提问，这个问题比较普遍，我好好思考了下。]]>
+      
+      </description>
+      <content:encoded><![CDATA[整理了一条圈子里头一位朋友的提问，这个问题比较普遍，我好好思考了下。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/26/about-improve/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[如何快速上手一款 IDE - VSC 配置指南和插件推荐]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/21/something-about-vsc/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/21/something-about-vsc/</guid>
+      <pubDate>Fri Apr 21 2017 12:23:28 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[VSCode 刚出来的时候并不是特别看好，因为 Sublime 和 Atom 的插件生态已经做起来了，成千上万个可供选择，VSC 从零开始，除了自身提供的几个内置插件外几乎没有多余的选择，没想到短短一年多的时间，发展如此快。]]>
+      
+      </description>
+      <content:encoded><![CDATA[VSCode 刚出来的时候并不是特别看好，因为 Sublime 和 Atom 的插件生态已经做起来了，成千上万个可供选择，VSC 从零开始，除了自身提供的几个内置插件外几乎没有多余的选择，没想到短短一年多的时间，发展如此快。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/21/something-about-vsc/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[关于开源精神和小密圈]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</guid>
+      <pubDate>Mon Apr 03 2017 10:13:31 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[看到有人关注和吐槽，我就过来说几句吧，当然我也知道，不管我下面说什么，都会有人赞和踩。]]>
+      
+      </description>
+      <content:encoded><![CDATA[看到有人关注和吐槽，我就过来说几句吧，当然我也知道，不管我下面说什么，都会有人赞和踩。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊 HSTS 下的 HTTPS 降级问题]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/01/hsts-downgrade/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/01/hsts-downgrade/</guid>
+      <pubDate>Sat Apr 01 2017 12:00:02 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[HSTS 的作用是为了在用户通过 HTTP 访问网站时不需要服务器做 301/302 跳转，直接一个 307 本地强制使用 HTTPS 访问网站，这可以防止用户在第一次发出请求时被劫持，也减少了一次请求。]]>
+      
+      </description>
+      <content:encoded><![CDATA[HSTS 的作用是为了在用户通过 HTTP 访问网站时不需要服务器做 301/302 跳转，直接一个 307 本地强制使用 HTTPS 访问网站，这可以防止用户在第一次发出请求时被劫持，也减少了一次请求。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/01/hsts-downgrade/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[多说即将关闭，评论迁至何处？]]></title>
+      <link>http://www.barretlee.com/blog/2017/03/21/duoshuo-comment-service-will-be-closed/</link>
+      <guid>http://www.barretlee.com/blog/2017/03/21/duoshuo-comment-service-will-be-closed/</guid>
+      <pubDate>Tue Mar 21 2017 22:18:26 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[因公司业务调整，非常遗憾的向大家宣布多说项目即将关闭。 我们将于2017年6月1日正式关停服务，在此之前您可以通过后台的数据导出功能导出自己站点的评论数据。对此给您造成的不便，我们深表歉意，感谢您的一路相伴。]]>
+      
+      </description>
+      <content:encoded><![CDATA[因公司业务调整，非常遗憾的向大家宣布多说项目即将关闭。 我们将于2017年6月1日正式关停服务，在此之前您可以通过后台的数据导出功能导出自己站点的评论数据。对此给您造成的不便，我们深表歉意，感谢您的一路相伴。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/03/21/duoshuo-comment-service-will-be-closed/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[知识付费，小密圈能走多远？]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/</guid>
+      <pubDate>Wed Feb 22 2017 23:01:32 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[首先需要明确，小密圈是个什么东西。小密圈，它是一个工具，连接粉丝的工具，连接社群的工具。这个工具可以给社群中的人带来价值（知识、人脉、娱乐等），也可以给工具的使用者带来利益（财富回报、知识沉淀和整理、满足感、影响力等）。]]>
+      
+      </description>
+      <content:encoded><![CDATA[首先需要明确，小密圈是个什么东西。小密圈，它是一个工具，连接粉丝的工具，连接社群的工具。这个工具可以给社群中的人带来价值（知识、人脉、娱乐等），也可以给工具的使用者带来利益（财富回报、知识沉淀和整理、满足感、影响力等）。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[心流，从工作中找到快感]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/</guid>
+      <pubDate>Sun Feb 19 2017 21:41:03 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[今天学到一个词，心流，指的是当人们沉浸在当下的某件事情时，全神贯注、全情投入并享受其中从而体验到的一种幸福的精神状态。]]>
+      
+      </description>
+      <content:encoded><![CDATA[今天学到一个词，心流，指的是当人们沉浸在当下的某件事情时，全神贯注、全情投入并享受其中从而体验到的一种幸福的精神状态。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（4）：装饰模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/</guid>
+      <pubDate>Tue Feb 14 2017 08:47:45 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[装饰模式，动态地给一个对象增加一些额外的职责 ( Responsibility )，就增加对象功能来说，装饰模式比生成子类实现更为灵活。]]>
+      
+      </description>
+      <content:encoded><![CDATA[装饰模式，动态地给一个对象增加一些额外的职责 ( Responsibility )，就增加对象功能来说，装饰模式比生成子类实现更为灵活。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[因小程序卸载的软件，重新安装回来了么？]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/13/why-reinstall-software-uninstall-when-xcx/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/13/why-reinstall-software-uninstall-when-xcx/</guid>
+      <pubDate>Mon Feb 13 2017 08:33:47 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[小程序让中低配手机人群欢喜了一把，删除几个软件可以省下几百兆的空间；而如今这些删除的软件，你是否又安装了回来？]]>
+      
+      </description>
+      <content:encoded><![CDATA[小程序让中低配手机人群欢喜了一把，删除几个软件可以省下几百兆的空间；而如今这些删除的软件，你是否又安装了回来？]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/13/why-reinstall-software-uninstall-when-xcx/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（3）：门面模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/</guid>
+      <pubDate>Tue Feb 07 2017 08:35:03 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。]]>
+      
+      </description>
+      <content:encoded><![CDATA[Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（2）：享元模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/</guid>
+      <pubDate>Sat Feb 04 2017 18:31:44 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。]]>
+      
+      </description>
+      <content:encoded><![CDATA[如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（1）：桥接模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/</guid>
+      <pubDate>Mon Jan 16 2017 20:57:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。]]>
+      
+      </description>
+      <content:encoded><![CDATA[桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[如何设计友好的 WebHook]]></title>
+      <link>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/</link>
+      <guid>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/</guid>
+      <pubDate>Mon Dec 26 2016 12:39:59 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[随着应用的复杂度提升，系统解耦变得越来越重要，WebHook 作为一种通用的交互方案，在设计上多留一个心眼，十分有意义！]]>
+      
+      </description>
+      <content:encoded><![CDATA[随着应用的复杂度提升，系统解耦变得越来越重要，WebHook 作为一种通用的交互方案，在设计上多留一个心眼，十分有意义！]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Nginx 配置简述]]></title>
+      <link>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/</link>
+      <guid>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/</guid>
+      <pubDate>Sat Nov 19 2016 23:51:46 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[不论是本地开发，还是远程到 Server 开发，还是给提供 demo 给人看效果，我们时常需要对 Nginx 做配置，Nginx 的配置项相当多，配置起来也比较麻烦。不过，我们往往只是需要一个静态 Server，或者一个反向代理 Server，这对 Nginx 来说小菜一碟。]]>
+      
+      </description>
+      <content:encoded><![CDATA[不论是本地开发，还是远程到 Server 开发，还是给提供 demo 给人看效果，我们时常需要对 Nginx 做配置，Nginx 的配置项相当多，配置起来也比较麻烦。不过，我们往往只是需要一个静态 Server，或者一个反向代理 Server，这对 Nginx 来说小菜一碟。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[谈一谈我在阿里的成长]]></title>
+      <link>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/</link>
+      <guid>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/</guid>
+      <pubDate>Fri Oct 21 2016 03:22:50 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[昨天受阿里通信的同事邀请，分享了一个关于成长的话题。其实我不太热衷于分享此类话题，作为一个技术人，分享那些没有技术干货的内容总感觉有些怪怪的，无奈，还是拟下了这个话题——《谈一谈我在阿里的成长》，所以本文主要是分享的 PPT 简述。]]>
+      
+      </description>
+      <content:encoded><![CDATA[昨天受阿里通信的同事邀请，分享了一个关于成长的话题。其实我不太热衷于分享此类话题，作为一个技术人，分享那些没有技术干货的内容总感觉有些怪怪的，无奈，还是拟下了这个话题——《谈一谈我在阿里的成长》，所以本文主要是分享的 PPT 简述。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[揭秘 0.1 + 0.2 != 0.3]]></title>
+      <link>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</link>
+      <guid>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</guid>
+      <pubDate>Wed Sep 28 2016 23:05:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。]]>
+      
+      </description>
+      <content:encoded><![CDATA[在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[如何做好一名实习生]]></title>
+      <link>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/</link>
+      <guid>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/</guid>
+      <pubDate>Tue Sep 27 2016 00:59:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[最近看到有几个同事准备着转正，想借此机会聊一下实习生相关的话题——如何成为一名优秀的实习生。]]>
+      
+      </description>
+      <content:encoded><![CDATA[最近看到有几个同事准备着转正，想借此机会聊一下实习生相关的话题——如何成为一名优秀的实习生。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[详解代理自动配置 PAC]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/25/pac-file/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/25/pac-file/</guid>
+      <pubDate>Thu Aug 25 2016 01:31:50 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[PAC，一个自动代理配置脚本，包含了很多使用 JavaScript 编写的规则，它能够决定网络流量走默认通道还是代理服务器通道，控制的流量类型包括：HTTP、HTTPS 和 FTP。]]>
+      
+      </description>
+      <content:encoded><![CDATA[PAC，一个自动代理配置脚本，包含了很多使用 JavaScript 编写的规则，它能够决定网络流量走默认通道还是代理服务器通道，控制的流量类型包括：HTTP、HTTPS 和 FTP。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/25/pac-file/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[构建一个安全的 JavaScript 沙箱]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</guid>
+      <pubDate>Tue Aug 23 2016 01:05:13 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。]]>
+      
+      </description>
+      <content:encoded><![CDATA[灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊一聊排序算法]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/</guid>
+      <pubDate>Thu Aug 11 2016 20:24:40 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[两月前花了些时间，将大学里学过的排序算法都复习了一遍，代码放在 github 上。没有整理，今天翻了翻代码，重新 review 了一遍，也顺便做了点记录。]]>
+      
+      </description>
+      <content:encoded><![CDATA[两月前花了些时间，将大学里学过的排序算法都复习了一遍，代码放在 github 上。没有整理，今天翻了翻代码，重新 review 了一遍，也顺便做了点记录。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[有意思的 git-log]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/</guid>
+      <pubDate>Thu Aug 04 2016 22:54:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[之前写过几篇 git 相关的文章，内容很基础，但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 `git log` 命令。]]>
+      
+      </description>
+      <content:encoded><![CDATA[之前写过几篇 git 相关的文章，内容很基础，但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 `git log` 命令。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Shadowsocks 原理简介及安装指南]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/03/shadowsocks/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/03/shadowsocks/</guid>
+      <pubDate>Wed Aug 03 2016 21:08:40 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。]]>
+      
+      </description>
+      <content:encoded><![CDATA[对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/03/shadowsocks/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[入 linode 之前]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</guid>
+      <pubDate>Tue Aug 02 2016 01:02:30 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
+      
+      </description>
+      <content:encoded><![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[工作五年，后面四年重复着第一年的活儿？]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</guid>
+      <pubDate>Thu Jul 21 2016 22:29:37 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
+      
+      </description>
+      <content:encoded><![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[向小胡子哥提问]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/14/question-and-answer/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/14/question-and-answer/</guid>
+      <pubDate>Thu Jul 14 2016 09:56:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[欢迎向小胡子哥提问，由于个人精力有限，并不是每一个问题都会去回答。但是你可以这么做。]]>
+      
+      </description>
+      <content:encoded><![CDATA[欢迎向小胡子哥提问，由于个人精力有限，并不是每一个问题都会去回答。但是你可以这么做。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/14/question-and-answer/#comments</comments>
+    </item>
+    
+  </channel>
+</rss>
