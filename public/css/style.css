@@ -6623,7 +6623,7 @@ div#ds-thread #ds-reset .ds-comment-body {
   top: 0 !important;
 }
 code {
-  word-break: break-all;
+  word-break: normal;
 }
 span.line {
   display: block !important;

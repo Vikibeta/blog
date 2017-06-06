@@ -3,6 +3,95 @@
   
     
     <entry>
+      <title><![CDATA[深入理解 Node Stream 内部机制]]></title>
+      <url>/blog/2017/06/06/dive-to-nodejs-at-stream-module/</url>
+      <content type="html"><![CDATA[<p>相信很多人对 Node 的 Stream 已经不陌生了，不论是请求流、响应流、文件流还是 socket 流，这些流的底层都是使用 <code>stream</code> 模块封装的，甚至我们平时用的最多的 <code>console.log</code> 打印日志也使用了它，不信你打开 Node runtime 的源码，看看 <a href="https://github.com/nodejs/node/blob/master/lib/console.js#L82-L109" target="_blank" rel="external"><code>lib/console.js</code></a>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params">ignoreErrors, stream, string, errorhandler</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">  stream.once(<span class="string">'error'</span>, noop);</div><div class="line">  stream.write(string, errorhandler);</div><div class="line">  <span class="comment">//...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">Console.prototype.log = <span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line">  write(<span class="keyword">this</span>._ignoreErrors,</div><div class="line">        <span class="keyword">this</span>._stdout,</div><div class="line">        <span class="string">`<span class="subst">$&#123;util.format.apply(<span class="literal">null</span>, args)&#125;</span>\n`</span>,</div><div class="line">        <span class="keyword">this</span>._stdoutErrorHandler);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多模块理解起来就顺畅多了。</p>
+<p>本文代码和图片可以在这里取用：<a href="https://github.com/barretlee/dive-into-node-stream" target="_blank" rel="external">https://github.com/barretlee/dive-into-node-stream</a>。</p>
+<h3 id="stream-模块"><a href="#stream-模块" class="headerlink" title="stream 模块"></a>stream 模块</h3><p>如果你了解 <a href="https://zh.wikipedia.org/zh-hans/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98" target="_blank" rel="external">生产者和消费者问题</a> 的解法，那理解 stream 就基本没有压力了，它不仅仅是资料的起点和落点，还包含了一系列状态控制，可以说一个 stream 就是一个状态管理单元。了解内部机制的最佳方式除了看 <a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">Node 官方文档</a>，还可以去看看 Node 的 <a href="https://github.com/nodejs/node/blob/master/lib/" target="_blank" rel="external">源码</a>：</p>
+<ul>
+<li><code>lib/module.js</code></li>
+<li><code>lib/_stream_readable.js</code></li>
+<li><code>lib/_stream_writable.js</code></li>
+<li><code>lib/_stream_tranform.js</code></li>
+<li><code>lib/_stream_duplex.js</code></li>
+</ul>
+<p>把 <code>Readable</code> 和 <code>Writable</code> 看明白，后面两者也就差不多理解了。</p>
+<h3 id="Readable-Stream"><a href="#Readable-Stream" class="headerlink" title="Readable Stream"></a>Readable Stream</h3><p>Readable Stream 存在两种模式，一种是叫做 <code>Flowing Mode</code>，流动模式，在 Stream 上绑定 ondata 方法就会自动触发这个模式，比如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> readable = getReadableStreamSomehow();</div><div class="line">readable.on(<span class="string">'data'</span>, (chunk) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`Received <span class="subst">$&#123;chunk.length&#125;</span> bytes of data.`</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这个模式的流程图如下：</p>
+<p><img src="/blogimgs/node-stream-readable-flowing.png" alt="Flowing"></p>
+<p>资源的数据流并不是直接流向消费者，而是先 push 到缓存池，缓存池有一个水位标记 <code>highWatermark</code>，超过这个标记阈值，push 的时候会返回 <code>false</code>，什么场景下会出现这种情况呢？</p>
+<ul>
+<li>消费者主动执行了 <code>.pause()</code></li>
+<li>消费速度比数据 push 到缓存池的生产速度慢</li>
+</ul>
+<p>有个专有名词来形成这种情况，叫做「背压」，Writable Stream 也存在类似的情况。</p>
+<p>流动模式，这个名词还是很形象的，缓存池就像一个水桶，消费者通过管口接水，同时，资源池就像一个水泵，不断地往水桶中泵水，而 highWaterMark 是水桶的浮标，达到阈值就停止蓄水。<br>下面是一个简单的 Demo：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Readable = <span class="built_in">require</span>(<span class="string">'stream'</span>).Readable;</div><div class="line"></div><div class="line"><span class="comment">// Stream 实现</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyReadable</span> <span class="keyword">extends</span> <span class="title">Readable</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(dataSource, options) &#123;</div><div class="line">    <span class="keyword">super</span>(options);</div><div class="line">    <span class="keyword">this</span>.dataSource = dataSource;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 继承了 Readable 的类必须实现这个函数</span></div><div class="line">  <span class="comment">// 触发系统底层对流的读取</span></div><div class="line">  _read() &#123;</div><div class="line">    <span class="keyword">const</span> data = <span class="keyword">this</span>.dataSource.makeData();</div><div class="line">    <span class="keyword">this</span>.push(data);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 模拟资源池</span></div><div class="line"><span class="keyword">const</span> dataSource = &#123;</div><div class="line">  <span class="attr">data</span>: <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">10</span>).fill(<span class="string">'-'</span>),</div><div class="line">  <span class="comment">// 每次读取时 pop 一个数据</span></div><div class="line">  makeData() &#123;</div><div class="line">    <span class="keyword">if</span> (!dataSource.data.length) <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">    <span class="keyword">return</span> dataSource.data.pop();</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> myReadable = <span class="keyword">new</span> MyReadable(dataSource);</div><div class="line">myReadable.setEncoding(<span class="string">'utf8'</span>);</div><div class="line">myReadable.on(<span class="string">'data'</span>, (chunk) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(chunk);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>另外一种模式是 <code>Non-Flowing Mode</code>，没流动，也就是暂停模式，这是 Stream 的预设模式，Stream 实例的 <code>_readableState.flow</code> 有三个状态，分别是：</p>
+<ul>
+<li><code>_readableState.flow = null</code>，暂时没有消费者过来</li>
+<li><code>_readableState.flow = false</code>，主动触发了 <code>.pause()</code></li>
+<li><code>_readableState.flow = true</code>，流动模式</li>
+</ul>
+<p>当我们监听了 onreadable 事件后，会进入这种模式，比如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myReadable = <span class="keyword">new</span> MyReadable(dataSource);</div><div class="line">myReadable.setEncoding(<span class="string">'utf8'</span>);</div><div class="line">myReadable.on(<span class="string">'readable'</span>, () =&gt; &#123;&#125;);</div></pre></td></tr></table></figure>
+<p>监听 <code>readable</code> 的回调函数第一个参数不会传递内容，需要我们通过 <code>myReadable.read()</code> 主动读取，为啥呢，可以看看下面这张图：</p>
+<p><img src="/blogimgs/node-stream-non-flowing.png" alt="node-stream-non-flowing"></p>
+<p>资源池会不断地往缓存池输送数据，直到 highWaterMark 阈值，消费者监听了 readable 事件并不会消费数据，需要主动调用 <code>.read([size])</code> 函数才会从缓存池取出，并且可以带上 size 参数，用多少就取多少：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> myReadable = <span class="keyword">new</span> MyReadable(dataSource);</div><div class="line">myReadable.setEncoding(<span class="string">'utf8'</span>);</div><div class="line">myReadable.on(<span class="string">'readable'</span>, () =&gt; &#123;</div><div class="line">  <span class="keyword">let</span> chunk;</div><div class="line">  <span class="keyword">while</span> (<span class="literal">null</span> !== (chunk = myReadable.read())) &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`Received <span class="subst">$&#123;chunk.length&#125;</span> bytes of data.`</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里需要注意一点，只要数据达到缓存池都会触发一次 readable 事件，有可能出现「消费者正在消费数据的时候，又触发了一次 readable 事件，那么下次回调中 read 到的数据可能为空」的情况。我们可以通过 <code>_readableState.buffer</code> 来查看缓存池到底缓存了多少资源：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> once = <span class="literal">false</span>;</div><div class="line">myReadable.on(<span class="string">'readable'</span>, (chunk) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(myReadable._readableState.buffer.length);</div><div class="line">  <span class="keyword">if</span> (once) <span class="keyword">return</span>;</div><div class="line">  once = <span class="literal">true</span>;</div><div class="line">  <span class="built_in">console</span>.log(myReadable.read());</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的代码我们只消费一次缓存池的数据，那么在消费后，缓存池又收到了一次资源池的 push 操作，此时还会触发一次 readable 事件，我们可以看看这次存了多大的 buffer。</p>
+<p>需要注意的是，buffer 大小也是有上限的，默认设置为 16kb，也就是 16384 个字节长度，它最大可设置为 8Mb，没记错的话，这个值好像是 Node 的 new space memory 的大小。</p>
+<p>上面介绍了 Readable Stream 大概的机制，还有很多细节部分没有提到，比如 <code>Flowing Mode</code> 在不同 Node 版本中的 Stream 实现不太一样，实际上，它有三个版本，上面提到的是第 2 和 第 3 个版本的实现；再比如 <code>Mixins Mode</code> 模式，一般我们只推荐（允许）使用 ondata 和 onreadable 的一种来处理 Readable Stream，但是如果要求在 <code>Non-Flowing Mode</code> 的情况下使用 ondata 如何实现呢？那么就可以考虑 <code>Mixins Mode</code> 了。</p>
+<h3 id="Writable-Stream"><a href="#Writable-Stream" class="headerlink" title="Writable Stream"></a>Writable Stream</h3><p>原理与 Readable Stream 是比较相似的，数据流过来的时候，会直接写入到资源池，当写入速度比较缓慢或者写入暂停时，数据流会进入队列池缓存起来，如下图所示：</p>
+<p><img src="/blogimgs/node-stream-writable.png" alt="node-stream-writable"></p>
+<p>当生产者写入速度过快，把队列池装满了之后，就会出现「背压」，这个时候是需要告诉生产者暂停生产的，当队列释放之后，Writable Stream 会给生产者发送一个 <code>drain</code> 消息，让它恢复生产。下面是一个写入一百万条数据的 Demo：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">writeOneMillionTimes</span>(<span class="params">writer, data, encoding, callback</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> i = <span class="number">10000</span>;</div><div class="line">  write();</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> ok = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">while</span>(i-- &gt; <span class="number">0</span> &amp;&amp; ok) &#123;</div><div class="line">      <span class="comment">// 写入结束时回调</span></div><div class="line">      ok = writer.write(data, encoding, i === <span class="number">0</span> ? callback : <span class="literal">null</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</div><div class="line">      <span class="comment">// 这里提前停下了，'drain' 事件触发后才可以继续写入  </span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'drain'</span>, i);</div><div class="line">      writer.once(<span class="string">'drain'</span>, write);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们构造一个 Writable Stream，在写入到资源池的时候，我们稍作处理，让它效率低一点：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Writable = <span class="built_in">require</span>(<span class="string">'stream'</span>).Writable;</div><div class="line"><span class="keyword">const</span> writer = <span class="keyword">new</span> Writable(&#123;</div><div class="line">  write(chunk, encoding, callback) &#123;</div><div class="line">    <span class="comment">// 比 process.nextTick() 稍慢</span></div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      callback &amp;&amp; callback();</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">writeOneMillionTimes(writer, <span class="string">'simple'</span>, <span class="string">'utf8'</span>, () =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'end'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>最后执行的结果是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">drain 7268</div><div class="line">drain 4536</div><div class="line">drain 1804</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>说明程序遇到了三次「背压」，如果我们没有在上面绑定 <code>writer.once(&#39;drain&#39;)</code>，那么最后的结果就是 Stream 将第一次获取的数据消耗完变结束了程序。</p>
+<h3 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h3><p>了解了 Readable 和 Writable，pipe 这个常用的函数应该就很好理解了，</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">readable.pipe(writable);</div></pre></td></tr></table></figure>
+<p>这句代码的语意性很强，readable 通过 pipe（管道）传输给 writable，pipe 的实现大致如下（伪代码）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">Readable.prototype.pipe = <span class="function"><span class="keyword">function</span>(<span class="params">writable, options</span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.on(<span class="string">'data'</span>, (chunk) =&gt; &#123;</div><div class="line">    <span class="keyword">let</span> ok = writable.write(chunk);</div><div class="line">true<span class="comment">// 背压，暂停</span></div><div class="line">    !ok &amp;&amp; <span class="keyword">this</span>.pause();</div><div class="line">  &#125;);</div><div class="line">  writable.on(<span class="string">'drain'</span>, () =&gt; &#123;</div><div class="line">    <span class="comment">// 恢复</span></div><div class="line">    <span class="keyword">this</span>.resume();</div><div class="line">  &#125;);</div><div class="line">  <span class="comment">// 告诉 writable 有流要导入</span></div><div class="line">  writable.emit(<span class="string">'pipe'</span>, <span class="keyword">this</span>);</div><div class="line">  <span class="comment">// 支持链式调用</span></div><div class="line">  <span class="keyword">return</span> writable;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面做了五件事情：</p>
+<ul>
+<li><code>emit(pipe)</code>，通知写入</li>
+<li><code>.write()</code>，新数据过来，写入</li>
+<li><code>.pause()</code>，消费者消费速度慢，暂停写入</li>
+<li><code>.resume()</code>，消费者完成消费，继续写入</li>
+<li><code>return writable</code>，支持链式调用</li>
+</ul>
+<p>当然，上面只是最简单的逻辑，还有很多异常和临界判断没有加入，具体可以去看看 Node 的代码（ <a href="https://github.com/nodejs/node/blob/master/lib/_stream_readable.js#L541-L684" target="_blank" rel="external">/lib/_stream_readable.js</a>）。</p>
+<h3 id="Duplex-Stream"><a href="#Duplex-Stream" class="headerlink" title="Duplex Stream"></a>Duplex Stream</h3><p>Duplex，双工的意思，它的输入和输出可以没有任何关系，</p>
+<p><img src="/blogimgs/node-stream-duplex.png" alt="Node-Stream-Duplex"></p>
+<p>Duplex Stream 实现特别简单，不到一百行代码，它继承了 Readable Stream，并拥有 Writable Stream 的方法（<a href="https://github.com/nodejs/node/blob/master/lib/_stream_duplex.js#L31-L42" target="_blank" rel="external">源码地址</a>）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</div><div class="line"><span class="keyword">const</span> Readable = <span class="built_in">require</span>(<span class="string">'_stream_readable'</span>);</div><div class="line"><span class="keyword">const</span> Writable = <span class="built_in">require</span>(<span class="string">'_stream_writable'</span>);</div><div class="line"></div><div class="line">util.inherits(Duplex, Readable);</div><div class="line"></div><div class="line"><span class="keyword">var</span> keys = <span class="built_in">Object</span>.keys(Writable.prototype);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v = <span class="number">0</span>; v &lt; keys.length; v++) &#123;</div><div class="line">  <span class="keyword">var</span> method = keys[v];</div><div class="line">  <span class="keyword">if</span> (!Duplex.prototype[method])</div><div class="line">    Duplex.prototype[method] = Writable.prototype[method];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以通过 options 参数来配置它为只可读、只可写或者半工模式，一个简单的 Demo：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> Duplex = <span class="built_in">require</span>(<span class="string">'stream'</span>).Duplex</div><div class="line"></div><div class="line"><span class="keyword">const</span> duplex = Duplex();</div><div class="line"></div><div class="line"><span class="comment">// readable</span></div><div class="line"><span class="keyword">let</span> i = <span class="number">2</span>;</div><div class="line">duplex._read = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.push(i-- ? <span class="string">'read '</span> + i : <span class="literal">null</span>);</div><div class="line">&#125;;</div><div class="line">duplex.on(<span class="string">'data'</span>, data =&gt; <span class="built_in">console</span>.log(data.toString()));</div><div class="line"></div><div class="line"><span class="comment">// writable</span></div><div class="line">duplex._write = <span class="function"><span class="keyword">function</span> (<span class="params">chunk, encoding, callback</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(chunk.toString());</div><div class="line">  callback();</div><div class="line">&#125;;</div><div class="line">duplex.write(<span class="string">'write'</span>);</div></pre></td></tr></table></figure>
+<p>输出的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">write</div><div class="line">read 1</div><div class="line">read 0</div></pre></td></tr></table></figure>
+<p>可以看出，两个管道是相互之间不干扰的。</p>
+<h3 id="Transform-Stream"><a href="#Transform-Stream" class="headerlink" title="Transform Stream"></a>Transform Stream</h3><p>Transform Stream 集成了 Duplex Stream，它同样具备 Readable 和 Writable 的能力，只不过它的输入和输出是存在相互关联的，中间做了一次转换处理。常见的处理有 Gzip 压缩、解压等。</p>
+<p><img src="/blogimgs/node-stream-transform.png" alt="node-stream-transform"></p>
+<p>Transform 的处理就是通过 <code>_transform</code> 函数将 Duplex 的 Readable 连接到 Writable，由于 Readable 的生产效率与 Writable 的消费效率是一样的，所以这里 Transform 内部不存在「背压」问题，背压问题的源头是外部的生产者和消费者速度差造成的。</p>
+<p>关于 Transfrom Stream，我写了一个简单的 Demo：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Transform = <span class="built_in">require</span>(<span class="string">'stream'</span>).Transform;</div><div class="line"><span class="keyword">const</span> MAP = &#123;</div><div class="line">  <span class="string">'Barret'</span>: <span class="string">'靖'</span>,</div><div class="line">  <span class="string">'Lee'</span>: <span class="string">'李'</span></div><div class="line">&#125;;</div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Translate</span> <span class="keyword">extends</span> <span class="title">Transform</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(dataSource, options) &#123;</div><div class="line">    <span class="keyword">super</span>(options);</div><div class="line">  &#125;</div><div class="line">  _transform(buf, enc, next) &#123;</div><div class="line">    <span class="keyword">const</span> key = buf.toString();</div><div class="line">    <span class="keyword">const</span> data = MAP[key];</div><div class="line">    <span class="keyword">this</span>.push(data);</div><div class="line">    next();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> transform = <span class="keyword">new</span> Translate();</div><div class="line">transform.on(<span class="string">'data'</span>, data =&gt; <span class="built_in">console</span>.log(data.toString()));</div><div class="line">transform.write(<span class="string">'Lee'</span>);</div><div class="line">transform.write(<span class="string">'Barret'</span>);</div><div class="line">transform.end();</div></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文主要参考和查阅 Node 官网的文档和源码，细节问题都是从源码中找到的答案，如果有理解不准确之处，还请斧正。</p>
+<p>了解了这些 Stream 的内部机制，对我们后续深入理解上层代码有很大的促进作用，特别希望初学 Node 的同学花点时间进来看看。</p>
+<p>另外，本文代码和图片可以在这里取用：<a href="https://github.com/barretlee/dive-into-node-stream" target="_blank" rel="external">https://github.com/barretlee/dive-into-node-stream</a>。</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[通过 admin 后台管理 hexo 博客]]></title>
       <url>/blog/2017/06/04/admin-platform-manage-hexo-blog/</url>
       <content type="html"><![CDATA[<p>用了两年的 hexo 写博客，但随着博客数量的增加，构建变得原来越耗时，写博客也是强依赖于文本编辑器，无法通过 web 实时修改，更加没办法通过手机端去修改博客的内容，这让我挺苦恼。</p>
@@ -248,7 +337,7 @@
       <title><![CDATA[如何快速上手一款 IDE - VSC 配置指南和插件推荐]]></title>
       <url>/blog/2017/04/21/something-about-vsc/</url>
       <content type="html"><![CDATA[<p>VSCode 刚出来的时候并不是特别看好，因为 Sublime 和 Atom 的插件生态已经做起来了，成千上万个可供选择，VSC 从零开始，除了自身提供的几个内置插件外几乎没有多余的选择，没想到短短一年多的时间，发展如此快，下图是我在其他平台也比较常用的几个插件，我安装了挺多，大概二三十个。</p>
-<p><img src="http://ww3.sinaimg.cn/large/006tKfTcgy1feu3asuhi8j31400p0jxr.jpg" alt="VSC"></p>
+<p><img src="//ww3.sinaimg.cn/large/006tKfTcgy1feu3asuhi8j31400p0jxr.jpg" alt="VSC"></p>
 <a id="more"></a>
 <p>当初看中 Atom 放下 Sublime 的主要原因是 Atom 可以让用户自定义界面，而且我学会了在 Atom 上写插件，觉得很爽，而且我也确实自定义了很多靠近自己使用习惯的内容。</p>
 <p>如今投奔 VSC，原因是我发现自己并没有太多自定义 Editor 界面的需求，而且经常搞出一堆性能问题，潜进去解决这些问题太费时间了，尤其是 Atom 打开一个大文件慢的要命的问题，超过 1M 差不多就会把界面搞挂，这让我不可忍受。</p>
@@ -264,15 +353,15 @@
 <li><strong>插件配置</strong>，安装 IDE 辅助功能，而每个插件也包含上述两部分配置；</li>
 </ul>
 <p>拿到 VSC 的第一件事请就是增加了两个快捷键，让我可以快速打开 IDE 配置界面和快捷键配置界面，快捷键的配置可以在这里找到：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgy1feu3zq0epwj30dg07bdgr.jpg" alt="VSC 快捷键"></p>
+<p><img src="//ww2.sinaimg.cn/large/006tKfTcgy1feu3zq0epwj30dg07bdgr.jpg" alt="VSC 快捷键"></p>
 <p>进入之后，搜索 <code>setting</code> 和 <code>keyboard</code> 就可以进行设置了，打开 IDE 配置的快捷键我调整为 <code>Command + ,</code>，打开快捷键配置界面的快捷键我调整为 <code>Command + Shift + ,</code>，这个配置给我带来了很大的便利，配合关键字搜索，我几乎可以在十几秒内完成任何一个功能的快捷键配置和界面的修改。比如我需要在编码界面上增加一个尺子，提醒自己代码一行不要写太长，按下了 <code>Command + ,</code>，然后搜索 <code>ruler</code>，得到了这个：</p>
-<p><img src="http://ww3.sinaimg.cn/large/006tKfTcgy1feu45ds8j5j31400p0q8r.jpg" alt="VSC - Ruler"></p>
+<p><img src="//ww3.sinaimg.cn/large/006tKfTcgy1feu45ds8j5j31400p0q8r.jpg" alt="VSC - Ruler"></p>
 <p>左边是系统默认配置，可不更改，右侧是用户个性化配置，可以覆盖默认配置，我增加了一行：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="string">"editor.rulers"</span>: [<span class="number">80</span>, <span class="number">100</span>]</div></pre></td></tr></table></figure>
 <p>于是我的界面上多了两条标尺线：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006tKfTcgy1feu46u3rfzj31400p0dmy.jpg" alt="标尺线"></p>
+<p><img src="//ww2.sinaimg.cn/large/006tKfTcgy1feu46u3rfzj31400p0dmy.jpg" alt="标尺线"></p>
 <p>我用了大概一个小时，将自己最常用的快捷键配置好了，比如我最喜欢的多行编辑，换成了自己熟悉的快捷键（Gif图片）：</p>
-<p><img src="http://ww3.sinaimg.cn/large/006tKfTcgy1feu6aa5k7lg30jv08hti7.gif" alt="多行编辑配置"></p>
+<p><img src="//ww3.sinaimg.cn/large/006tKfTcgy1feu6aa5k7lg30jv08hti7.gif" alt="多行编辑配置"></p>
 <p>不管自己用了多久的 Atom 或者 ST，当这些基础配置完成之后，会觉得转投另一个 IDE 并非什么痛苦的事情。</p>
 <h3 id="接下来就是插件配置"><a href="#接下来就是插件配置" class="headerlink" title="接下来就是插件配置"></a>接下来就是插件配置</h3><p>考虑一个 IDE，我会首先看看它是否有类似于 <code>Sync</code> 的插件，我有几台电脑，不可能每次换电脑都让我重新配置一次，我可经不起这个折腾，实际上，Atom 和 VSC 都提供了 <code>Sync</code> 插件，比如 VSC 的 <code>Settings Sync</code>，可以轻松将 IDE 的所有配置一键备份到 github 上，也可以将 github 上的配置一键拉取下来，然后重启 IDE 便可以共享同样的配置了。这个配置并不复杂，考虑到新手同学，我来简单介绍下它的使用：</p>
 <ul>
@@ -3777,7 +3866,7 @@
 <li><a href="http://www.csdn.net/article/1970-01-01/2815164" target="_blank" rel="external">http://www.csdn.net/article/1970-01-01/2815164</a> By 李晶</li>
 <li><a href="http://cnberg.com/archive/2013-fe/" target="_blank" rel="external">http://cnberg.com/archive/2013-fe/</a> By Berg</li>
 <li><a href="http://www.infoq.com/cn/articles/2014-review-front-end-part" target="_blank" rel="external">http://www.infoq.com/cn/articles/2014-review-front-end-part</a> By 黄丹</li>
-<li><a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x68;&#116;&#116;&#x70;&#x3a;&#x2f;&#47;&#109;&#x65;&#x64;&#x69;&#x75;&#109;&#46;&#x63;&#x6f;&#109;&#x2f;&#x40;&#115;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#101;&#x62;&#45;&#100;&#x65;&#118;&#101;&#108;&#111;&#112;&#109;&#x65;&#110;&#116;&#45;&#x74;&#x72;&#101;&#110;&#100;&#x73;&#45;&#x66;&#111;&#x72;&#x2d;&#x32;&#x30;&#x31;&#53;&#45;&#97;&#x6e;&#x64;&#x2d;&#x62;&#x65;&#x79;&#111;&#x6e;&#100;&#x2d;&#x63;&#x32;&#x64;&#x33;&#99;&#x31;&#101;&#x66;&#53;&#55;&#x31;&#56;">&#x68;&#116;&#116;&#x70;&#x3a;&#x2f;&#47;&#109;&#x65;&#x64;&#x69;&#x75;&#109;&#46;&#x63;&#x6f;&#109;&#x2f;&#x40;&#115;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#101;&#x62;&#45;&#100;&#x65;&#118;&#101;&#108;&#111;&#112;&#109;&#x65;&#110;&#116;&#45;&#x74;&#x72;&#101;&#110;&#100;&#x73;&#45;&#x66;&#111;&#x72;&#x2d;&#x32;&#x30;&#x31;&#53;&#45;&#97;&#x6e;&#x64;&#x2d;&#x62;&#x65;&#x79;&#111;&#x6e;&#100;&#x2d;&#x63;&#x32;&#x64;&#x33;&#99;&#x31;&#101;&#x66;&#53;&#55;&#x31;&#56;</a> By Shiju Varghese</li>
+<li><a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x68;&#116;&#116;&#x70;&#58;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#46;&#99;&#111;&#109;&#x2f;&#64;&#115;&#104;&#x69;&#106;&#117;&#x76;&#x61;&#x72;&#x2f;&#x77;&#x65;&#x62;&#x2d;&#x64;&#101;&#x76;&#x65;&#108;&#x6f;&#112;&#x6d;&#101;&#x6e;&#x74;&#x2d;&#116;&#114;&#x65;&#x6e;&#100;&#115;&#x2d;&#102;&#111;&#x72;&#45;&#x32;&#48;&#x31;&#53;&#45;&#97;&#110;&#x64;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#x66;&#x35;&#x37;&#49;&#x38;">&#x68;&#116;&#116;&#x70;&#58;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#46;&#99;&#111;&#109;&#x2f;&#64;&#115;&#104;&#x69;&#106;&#117;&#x76;&#x61;&#x72;&#x2f;&#x77;&#x65;&#x62;&#x2d;&#x64;&#101;&#x76;&#x65;&#108;&#x6f;&#112;&#x6d;&#101;&#x6e;&#x74;&#x2d;&#116;&#114;&#x65;&#x6e;&#100;&#115;&#x2d;&#102;&#111;&#x72;&#45;&#x32;&#48;&#x31;&#53;&#45;&#97;&#110;&#x64;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#x66;&#x35;&#x37;&#49;&#x38;</a> By Shiju Varghese</li>
 <li><a href="http://github.com/kuitos/kuitos.github.io/issues/32" target="_blank" rel="external">http://github.com/kuitos/kuitos.github.io/issues/32</a> By Kuitos</li>
 </ul>
 ]]></content>
@@ -8151,6 +8240,30 @@ document.onclick = function(){
     </entry>
     
     <entry>
+      <title><![CDATA[css选中前一个元素]]></title>
+      <url>/blog/2014/04/30/previous-element-with-css/</url>
+      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
+<pre><code>!previous + next {}
+</code></pre><p>这样选中上一个元素，那么就可以使用</p>
+<p>!* + obj 来选中 obj 的前一个元素了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[git切换到远程分支]]></title>
       <url>/blog/2014/04/30/switch-branch-in-git/</url>
       <content type="html"><![CDATA[<p>远程仓库 git clone 下来，当你执行 git branch，你只会看到</p>
@@ -8196,24 +8309,38 @@ master
     </entry>
     
     <entry>
-      <title><![CDATA[css选中前一个元素]]></title>
-      <url>/blog/2014/04/30/previous-element-with-css/</url>
-      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
-<pre><code>!previous + next {}
-</code></pre><p>这样选中上一个元素，那么就可以使用</p>
-<p>!* + obj 来选中 obj 的前一个元素了</p>
+      <title><![CDATA[mysqldump的使用]]></title>
+      <url>/blog/2014/04/29/useage-of-mysqldump/</url>
+      <content type="html"><![CDATA[<ol>
+<li><p>导出整个数据库<br>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名  </p>
+<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc &gt; wcnc.sql
+</code></pre></li>
+<li><p>导出一个表<br>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名</p>
+<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc users&gt; wcnc_users.sql
+</code></pre></li>
+<li><p>导出一个数据库结构</p>
+<pre><code>mysqldump -u wcnc -p -d --add-drop-table smgp_apps_wcnc &gt;d:\wcnc_db.sql
+</code></pre><p>-d 没有数据 –add-drop-table 在每个create语句之前增加一个drop table </p>
+</li>
+<li><p>导入数据库<br>常用source 命令<br>进入mysql数据库控制台，<br>如mysql -u root -p </p>
+<p>mysql&gt;use 数据库<br>然后使用source命令，后面参数为脚本文件（如这里用到的.sql）</p>
+<pre><code>mysql&gt;source d:\wcnc_db.sql
+</code></pre></li>
+</ol>
 ]]></content>
       
         <categories>
             
-            <category> 前端杂烩 </category>
+            <category> 后端杂烩 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> css </tag>
+            <tag> mysql </tag>
+            
+            <tag> mysqldump </tag>
             
         </tags>
         
@@ -8254,44 +8381,6 @@ console.log(root);
             <tag> JavaScript </tag>
             
             <tag> 解析 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[mysqldump的使用]]></title>
-      <url>/blog/2014/04/29/useage-of-mysqldump/</url>
-      <content type="html"><![CDATA[<ol>
-<li><p>导出整个数据库<br>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名  </p>
-<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc &gt; wcnc.sql
-</code></pre></li>
-<li><p>导出一个表<br>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名</p>
-<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc users&gt; wcnc_users.sql
-</code></pre></li>
-<li><p>导出一个数据库结构</p>
-<pre><code>mysqldump -u wcnc -p -d --add-drop-table smgp_apps_wcnc &gt;d:\wcnc_db.sql
-</code></pre><p>-d 没有数据 –add-drop-table 在每个create语句之前增加一个drop table </p>
-</li>
-<li><p>导入数据库<br>常用source 命令<br>进入mysql数据库控制台，<br>如mysql -u root -p </p>
-<p>mysql&gt;use 数据库<br>然后使用source命令，后面参数为脚本文件（如这里用到的.sql）</p>
-<pre><code>mysql&gt;source d:\wcnc_db.sql
-</code></pre></li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> 后端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> mysql </tag>
-            
-            <tag> mysqldump </tag>
             
         </tags>
         
@@ -8371,45 +8460,6 @@ console.log(root);
     </entry>
     
     <entry>
-      <title><![CDATA[当正则匹配零个字符]]></title>
-      <url>/blog/2014/04/28/reg-match-null/</url>
-      <content type="html"><![CDATA[<pre><code>&quot;something&quot;.match(/\s*(.*?)\s*/)
-&gt; [&apos;&apos;, &apos;&apos;]
-
-&quot;something&quot;.match(/^\s*(.*?)\s*$/)
-&gt; [&quot;something&quot;, &quot;something&quot;]
-</code></pre><p>为何前者匹配的结果为空？</p>
-<p>如果你不清楚正则的贪婪模式和非贪婪模式，请先移步<a href="http://www.cnblogs.com/hustskyking/p/how-regular-expressions-work.html#p-2.2" target="_blank" rel="external">这里</a>.</p>
-<p>整个匹配分为三步：</p>
-<ol>
-<li>第一个 \s*, 贪婪模式把字符全部吞掉，然后回溯，直到第一个字符任然没找到</li>
-<li>第二步是 .*? 由于是非贪婪模式匹配了一个字符就结束了，继续第三步</li>
-<li>第三步匹配失败，回溯到第二步，那第二步会继续减少吞掉的字符，于是字符数缩减到零。</li>
-</ol>
-<p>可能这么说还是不太清晰，先看看这个对比：<br><img src="//cloud.githubusercontent.com/assets/2698003/2816541/7e6c1076-cecb-11e3-823e-640e1b53ca00.jpg" alt="qq20140428195101"></p>
-<p>关于返回结果不是 null 而是 “”，你可以理解为匹配到了零个 a。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 正则 </tag>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[git版本回退操作]]></title>
       <url>/blog/2014/04/28/git-roll-back/</url>
       <content type="html"><![CDATA[<p>今天 github 上操作遇到了一个很头疼的问题，在某个文件中进行了误操作（有可能是加入了BOM头），diff 没看到差异，但是线上就是不正常显示。修改半天没用，只要回退版本。</p>
@@ -8464,26 +8514,28 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
     </entry>
     
     <entry>
-      <title><![CDATA[jekyll安装不了？]]></title>
-      <url>/blog/2014/04/27/ruby-jekyll-install/</url>
-      <content type="html"><![CDATA[<p>1、安装Ruby</p>
-<pre><code>sudo apt-get install ruby1.9.1-dev
-</code></pre><p>2、安装Jekyll</p>
-<pre><code>sudo gem install jekyll
-</code></pre><p>3、安装rake(用来可以生成markdown文件)</p>
-<pre><code>sudo gem install rake
-</code></pre><p>注意几点：</p>
-<ul>
-<li>不是安装 ruby，而是 ruby-dev</li>
-<li>安装 jekyll 之前应该先安装 rdoc</li>
-</ul>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">sudo gem <span class="keyword">install</span> rdoc</div></pre></td></tr></table></figure>
-<ul>
-<li>关于gem的下载速度，查看<a href="/2014/04/27/gem-sources">这篇文章</a></li>
-</ul>
+      <title><![CDATA[当正则匹配零个字符]]></title>
+      <url>/blog/2014/04/28/reg-match-null/</url>
+      <content type="html"><![CDATA[<pre><code>&quot;something&quot;.match(/\s*(.*?)\s*/)
+&gt; [&apos;&apos;, &apos;&apos;]
+
+&quot;something&quot;.match(/^\s*(.*?)\s*$/)
+&gt; [&quot;something&quot;, &quot;something&quot;]
+</code></pre><p>为何前者匹配的结果为空？</p>
+<p>如果你不清楚正则的贪婪模式和非贪婪模式，请先移步<a href="http://www.cnblogs.com/hustskyking/p/how-regular-expressions-work.html#p-2.2" target="_blank" rel="external">这里</a>.</p>
+<p>整个匹配分为三步：</p>
+<ol>
+<li>第一个 \s*, 贪婪模式把字符全部吞掉，然后回溯，直到第一个字符任然没找到</li>
+<li>第二步是 .*? 由于是非贪婪模式匹配了一个字符就结束了，继续第三步</li>
+<li>第三步匹配失败，回溯到第二步，那第二步会继续减少吞掉的字符，于是字符数缩减到零。</li>
+</ol>
+<p>可能这么说还是不太清晰，先看看这个对比：<br><img src="//cloud.githubusercontent.com/assets/2698003/2816541/7e6c1076-cecb-11e3-823e-640e1b53ca00.jpg" alt="qq20140428195101"></p>
+<p>关于返回结果不是 null 而是 “”，你可以理解为匹配到了零个 a。</p>
 ]]></content>
       
         <categories>
+            
+            <category> JavaScript </category>
             
             <category> 前端杂烩 </category>
             
@@ -8492,9 +8544,9 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
         
         <tags>
             
-            <tag> jekyll </tag>
+            <tag> 正则 </tag>
             
-            <tag> ruby </tag>
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -8600,17 +8652,23 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
     </entry>
     
     <entry>
-      <title><![CDATA[jekyll编译时报错invalid byte sequence in GBK]]></title>
-      <url>/blog/2014/04/26/jekyll-error-when-compile/</url>
-      <content type="html"><![CDATA[<p>找到你的Ruby安装目录，如我的是：D:\Ruby193, 在里面找到文件D:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb<br>在该文件中找到下面句子：</p>
-<pre><code># Returns nothing.
-    def read_yaml(base, name)
-      self.content = File.read(File.join(base, name))
-</code></pre><p>将它修改为：</p>
-<pre><code># Returns nothing.
-    def read_yaml(base, name)
-      self.content = File.read(File.join(base, name),:encoding=&gt;&quot;utf-8&quot;)
-</code></pre><p>然后确保所有带中文字符的markdown文件是无BOM的UTF-8格式即可。</p>
+      <title><![CDATA[jekyll安装不了？]]></title>
+      <url>/blog/2014/04/27/ruby-jekyll-install/</url>
+      <content type="html"><![CDATA[<p>1、安装Ruby</p>
+<pre><code>sudo apt-get install ruby1.9.1-dev
+</code></pre><p>2、安装Jekyll</p>
+<pre><code>sudo gem install jekyll
+</code></pre><p>3、安装rake(用来可以生成markdown文件)</p>
+<pre><code>sudo gem install rake
+</code></pre><p>注意几点：</p>
+<ul>
+<li>不是安装 ruby，而是 ruby-dev</li>
+<li>安装 jekyll 之前应该先安装 rdoc</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">sudo gem <span class="keyword">install</span> rdoc</div></pre></td></tr></table></figure>
+<ul>
+<li>关于gem的下载速度，查看<a href="/2014/04/27/gem-sources">这篇文章</a></li>
+</ul>
 ]]></content>
       
         <categories>
@@ -8621,48 +8679,10 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
         
         
         <tags>
-            
-            <tag> error </tag>
             
             <tag> jekyll </tag>
             
             <tag> ruby </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[clip的安装和使用]]></title>
-      <url>/blog/2014/04/26/clip-in-sys/</url>
-      <content type="html"><![CDATA[<p>很多情况下我们需要复制整个文件的内容，然后粘贴到其他地方，像我这种命令行控，文件操作基本都是命令行处理的，平时会用 vim 打开文件，然后</p>
-<pre><code>vim FILE # 打开文件
-ggVG # 全选内容
-&quot;+y  # 复制到系统缓冲区
-</code></pre><p>说实话，这真的很麻烦，其实我们可以这样：</p>
-<pre><code># windows用户
-clip &lt; FILE
-echo &quot;content&quot; | clip
-
-# linux用户
-xclip -sel clip &lt; FILE
-</code></pre><p>省去了打开文件复制的过程。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> tips </tag>
-            
-            <tag> clip </tag>
             
         </tags>
         
@@ -8723,6 +8743,75 @@ b // 1
             <tag> hack </tag>
             
             <tag> tips </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[clip的安装和使用]]></title>
+      <url>/blog/2014/04/26/clip-in-sys/</url>
+      <content type="html"><![CDATA[<p>很多情况下我们需要复制整个文件的内容，然后粘贴到其他地方，像我这种命令行控，文件操作基本都是命令行处理的，平时会用 vim 打开文件，然后</p>
+<pre><code>vim FILE # 打开文件
+ggVG # 全选内容
+&quot;+y  # 复制到系统缓冲区
+</code></pre><p>说实话，这真的很麻烦，其实我们可以这样：</p>
+<pre><code># windows用户
+clip &lt; FILE
+echo &quot;content&quot; | clip
+
+# linux用户
+xclip -sel clip &lt; FILE
+</code></pre><p>省去了打开文件复制的过程。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> tips </tag>
+            
+            <tag> clip </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[jekyll编译时报错invalid byte sequence in GBK]]></title>
+      <url>/blog/2014/04/26/jekyll-error-when-compile/</url>
+      <content type="html"><![CDATA[<p>找到你的Ruby安装目录，如我的是：D:\Ruby193, 在里面找到文件D:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb<br>在该文件中找到下面句子：</p>
+<pre><code># Returns nothing.
+    def read_yaml(base, name)
+      self.content = File.read(File.join(base, name))
+</code></pre><p>将它修改为：</p>
+<pre><code># Returns nothing.
+    def read_yaml(base, name)
+      self.content = File.read(File.join(base, name),:encoding=&gt;&quot;utf-8&quot;)
+</code></pre><p>然后确保所有带中文字符的markdown文件是无BOM的UTF-8格式即可。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> error </tag>
+            
+            <tag> jekyll </tag>
+            
+            <tag> ruby </tag>
             
         </tags>
         
@@ -8949,30 +9038,6 @@ document.body.innerHTML = oldHTML;
     </entry>
     
     <entry>
-      <title><![CDATA[老程序员Vs新程序员]]></title>
-      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
-</blockquote>
-<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 观点和感想 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> talk </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[npm穿墙]]></title>
       <url>/blog/2014/03/31/npm-cross-wall/</url>
       <content type="html"><![CDATA[<p>GWF 很给力，很多东西都能墙掉，但是把 npm 也纳入黑名单，不知道 GWFer 是怎么想的。翻墙翻了好多年了，原理其实也挺简单的，proxy 嘛！</p>
@@ -9050,6 +9115,30 @@ npm config set registry=http://registry.npmjs.org
             <tag> webview </tag>
             
             <tag> highlight </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[老程序员Vs新程序员]]></title>
+      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
+</blockquote>
+<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 观点和感想 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> talk </tag>
             
         </tags>
         
