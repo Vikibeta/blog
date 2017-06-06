@@ -90,6 +90,20 @@
 <p>另外，本文代码和图片可以在这里取用：<a href="https://github.com/barretlee/dive-into-node-stream" target="_blank" rel="external">https://github.com/barretlee/dive-into-node-stream</a>。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂谈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端杂谈 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -113,6 +127,18 @@
 <p><em>P.S. 当前这篇文章就是通过 Web 编辑的，我的 hexo 博客已经部署到阿里云了。</em></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 前端杂谈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端杂谈 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -140,6 +166,18 @@
 <p>细节问题自己去研究研究吧~</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 前端杂谈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 前端杂谈 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -3868,7 +3906,7 @@
 <li><a href="http://www.csdn.net/article/1970-01-01/2815164" target="_blank" rel="external">http://www.csdn.net/article/1970-01-01/2815164</a> By 李晶</li>
 <li><a href="http://cnberg.com/archive/2013-fe/" target="_blank" rel="external">http://cnberg.com/archive/2013-fe/</a> By Berg</li>
 <li><a href="http://www.infoq.com/cn/articles/2014-review-front-end-part" target="_blank" rel="external">http://www.infoq.com/cn/articles/2014-review-front-end-part</a> By 黄丹</li>
-<li><a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#104;&#x74;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#x64;&#105;&#x75;&#109;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#x65;&#x62;&#x2d;&#100;&#x65;&#118;&#101;&#x6c;&#x6f;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#x72;&#101;&#110;&#100;&#115;&#45;&#x66;&#x6f;&#114;&#x2d;&#x32;&#48;&#49;&#53;&#45;&#97;&#x6e;&#100;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#x63;&#x32;&#100;&#51;&#99;&#x31;&#x65;&#102;&#53;&#x37;&#x31;&#56;">&#104;&#x74;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#x64;&#105;&#x75;&#109;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#x65;&#x62;&#x2d;&#100;&#x65;&#118;&#101;&#x6c;&#x6f;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#x72;&#101;&#110;&#100;&#115;&#45;&#x66;&#x6f;&#114;&#x2d;&#x32;&#48;&#49;&#53;&#45;&#97;&#x6e;&#100;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#x63;&#x32;&#100;&#51;&#99;&#x31;&#x65;&#102;&#53;&#x37;&#x31;&#56;</a> By Shiju Varghese</li>
+<li><a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#104;&#x74;&#116;&#112;&#x3a;&#47;&#x2f;&#x6d;&#101;&#100;&#x69;&#x75;&#x6d;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#104;&#105;&#x6a;&#117;&#x76;&#x61;&#x72;&#47;&#119;&#x65;&#98;&#45;&#100;&#x65;&#x76;&#101;&#108;&#111;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#114;&#x65;&#x6e;&#x64;&#x73;&#45;&#102;&#x6f;&#114;&#45;&#x32;&#x30;&#49;&#x35;&#x2d;&#97;&#x6e;&#100;&#x2d;&#x62;&#101;&#121;&#111;&#x6e;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#102;&#53;&#x37;&#49;&#56;">&#104;&#x74;&#116;&#112;&#x3a;&#47;&#x2f;&#x6d;&#101;&#100;&#x69;&#x75;&#x6d;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#104;&#105;&#x6a;&#117;&#x76;&#x61;&#x72;&#47;&#119;&#x65;&#98;&#45;&#100;&#x65;&#x76;&#101;&#108;&#111;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#114;&#x65;&#x6e;&#x64;&#x73;&#45;&#102;&#x6f;&#114;&#45;&#x32;&#x30;&#49;&#x35;&#x2d;&#97;&#x6e;&#100;&#x2d;&#x62;&#101;&#121;&#111;&#x6e;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#102;&#53;&#x37;&#49;&#56;</a> By Shiju Varghese</li>
 <li><a href="http://github.com/kuitos/kuitos.github.io/issues/32" target="_blank" rel="external">http://github.com/kuitos/kuitos.github.io/issues/32</a> By Kuitos</li>
 </ul>
 ]]></content>
@@ -6616,6 +6654,31 @@
     </entry>
     
     <entry>
+      <title><![CDATA[去掉IE11中input右侧的关闭叉叉]]></title>
+      <url>/blog/2014/11/17/input-close-btn-in-ie11/</url>
+      <content type="html"><![CDATA[<p>在 IE11 下，浏览器自作多情在 text input 组件上加一个 close 叉叉：</p>
+<p><img src="//cloud.githubusercontent.com/assets/2698003/5064209/825ef988-6e3e-11e4-900a-5fadd3465d94.png" alt="image"></p>
+<p>这么整：</p>
+<pre><code>input::-ms-clear { display: none; } 
+</code></pre><p>这种伪元素类似于 web component.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> CSS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[让身体残疾的人可以访问Web]]></title>
       <url>/blog/2014/11/17/web-accessibility/</url>
       <content type="html"><![CDATA[<blockquote>
@@ -6639,31 +6702,6 @@
         <tags>
             
             <tag> WAI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[去掉IE11中input右侧的关闭叉叉]]></title>
-      <url>/blog/2014/11/17/input-close-btn-in-ie11/</url>
-      <content type="html"><![CDATA[<p>在 IE11 下，浏览器自作多情在 text input 组件上加一个 close 叉叉：</p>
-<p><img src="//cloud.githubusercontent.com/assets/2698003/5064209/825ef988-6e3e-11e4-900a-5fadd3465d94.png" alt="image"></p>
-<p>这么整：</p>
-<pre><code>input::-ms-clear { display: none; } 
-</code></pre><p>这种伪元素类似于 web component.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> CSS </tag>
             
         </tags>
         
@@ -7299,31 +7337,6 @@ document.onclick = function(){
     </entry>
     
     <entry>
-      <title><![CDATA[￥符号，少了一横]]></title>
-      <url>/blog/2014/08/29/dollar-in-different-face/</url>
-      <content type="html"><![CDATA[<p>跟钱有关的问题。</p>
-<p>数值前加一个 ￥ 符号，可是视觉同学一定要使用两横的 dollar 符号。咋弄？</p>
-<p>这个符号在不同字体下呈现的效果是不一样的，微软雅黑下是两横，不过显示的并不好看，正确的处理方式应该是：</p>
-<pre><code>&lt;style&gt;i {font-family:&quot;Microsoft Yahei&quot;;}&lt;/style&gt;
-&lt;i&gt;&amp;yen;&lt;/i&gt;
-</code></pre>]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[评《别太听上司的话》]]></title>
       <url>/blog/2014/08/29/be-patient/</url>
       <content type="html"><![CDATA[<p>今天早上逛博客园，看到了一篇吐槽的文章：<a href="http://www.cnblogs.com/beatless/p/3944101.html" target="_blank" rel="external">别太听上司的话</a>，有些感触：</p>
@@ -7347,6 +7360,31 @@ document.onclick = function(){
             <tag> life </tag>
             
             <tag> work </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[￥符号，少了一横]]></title>
+      <url>/blog/2014/08/29/dollar-in-different-face/</url>
+      <content type="html"><![CDATA[<p>跟钱有关的问题。</p>
+<p>数值前加一个 ￥ 符号，可是视觉同学一定要使用两横的 dollar 符号。咋弄？</p>
+<p>这个符号在不同字体下呈现的效果是不一样的，微软雅黑下是两横，不过显示的并不好看，正确的处理方式应该是：</p>
+<pre><code>&lt;style&gt;i {font-family:&quot;Microsoft Yahei&quot;;}&lt;/style&gt;
+&lt;i&gt;&amp;yen;&lt;/i&gt;
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
             
         </tags>
         
@@ -8242,30 +8280,6 @@ document.onclick = function(){
     </entry>
     
     <entry>
-      <title><![CDATA[css选中前一个元素]]></title>
-      <url>/blog/2014/04/30/previous-element-with-css/</url>
-      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
-<pre><code>!previous + next {}
-</code></pre><p>这样选中上一个元素，那么就可以使用</p>
-<p>!* + obj 来选中 obj 的前一个元素了</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[git切换到远程分支]]></title>
       <url>/blog/2014/04/30/switch-branch-in-git/</url>
       <content type="html"><![CDATA[<p>远程仓库 git clone 下来，当你执行 git branch，你只会看到</p>
@@ -8305,6 +8319,30 @@ master
         <tags>
             
             <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[css选中前一个元素]]></title>
+      <url>/blog/2014/04/30/previous-element-with-css/</url>
+      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
+<pre><code>!previous + next {}
+</code></pre><p>这样选中上一个元素，那么就可以使用</p>
+<p>!* + obj 来选中 obj 的前一个元素了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
             
         </tags>
         
@@ -8380,9 +8418,9 @@ console.log(root);
         
         <tags>
             
-            <tag> 解析 </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> 解析 </tag>
             
         </tags>
         
@@ -8555,39 +8593,6 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
     </entry>
     
     <entry>
-      <title><![CDATA[IOS边缘回弹的禁止]]></title>
-      <url>/blog/2014/04/27/IOS-doc-scroll/</url>
-      <content type="html"><![CDATA[<p>IOS的浏览器里头，文档滚到顶部或者底部，还是可以继续滚动，对于全屏的应用来说，这个多余的体验是十分不好的。如下：</p>
-<p><img src="//cloud.githubusercontent.com/assets/2698003/2810913/958be2f6-cdf2-11e3-8266-4adf0ab7da7d.jpg"></p>
-<p>比较靠谱的方式是：</p>
-<pre><code>document.addEventListener(&quot;touchmove&quot;, function(evt){
-  evt.preventDefault();
-}, true);
-</code></pre><p>禁用 touchmove，方法很靠谱，不过还是谨慎点用。呵呵。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> IOS </tag>
-            
-            <tag> touchmove </tag>
-            
-            <tag> scroll </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[jekyll安装不了？]]></title>
       <url>/blog/2014/04/27/ruby-jekyll-install/</url>
       <content type="html"><![CDATA[<p>1、安装Ruby</p>
@@ -8691,6 +8696,68 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
     </entry>
     
     <entry>
+      <title><![CDATA[IOS边缘回弹的禁止]]></title>
+      <url>/blog/2014/04/27/IOS-doc-scroll/</url>
+      <content type="html"><![CDATA[<p>IOS的浏览器里头，文档滚到顶部或者底部，还是可以继续滚动，对于全屏的应用来说，这个多余的体验是十分不好的。如下：</p>
+<p><img src="//cloud.githubusercontent.com/assets/2698003/2810913/958be2f6-cdf2-11e3-8266-4adf0ab7da7d.jpg"></p>
+<p>比较靠谱的方式是：</p>
+<pre><code>document.addEventListener(&quot;touchmove&quot;, function(evt){
+  evt.preventDefault();
+}, true);
+</code></pre><p>禁用 touchmove，方法很靠谱，不过还是谨慎点用。呵呵。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> IOS </tag>
+            
+            <tag> touchmove </tag>
+            
+            <tag> scroll </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[巧妙交换值]]></title>
+      <url>/blog/2014/04/26/replace-a-and-b/</url>
+      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
+a = [b, b = a][0];
+a // 2
+b // 1
+</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hack </tag>
+            
+            <tag> tips </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[clip的安装和使用]]></title>
       <url>/blog/2014/04/26/clip-in-sys/</url>
       <content type="html"><![CDATA[<p>很多情况下我们需要复制整个文件的内容，然后粘贴到其他地方，像我这种命令行控，文件操作基本都是命令行处理的，平时会用 vim 打开文件，然后</p>
@@ -8727,68 +8794,6 @@ xclip -sel clip &lt; FILE
     </entry>
     
     <entry>
-      <title><![CDATA[jekyll编译时报错invalid byte sequence in GBK]]></title>
-      <url>/blog/2014/04/26/jekyll-error-when-compile/</url>
-      <content type="html"><![CDATA[<p>找到你的Ruby安装目录，如我的是：D:\Ruby193, 在里面找到文件D:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb<br>在该文件中找到下面句子：</p>
-<pre><code># Returns nothing.
-    def read_yaml(base, name)
-      self.content = File.read(File.join(base, name))
-</code></pre><p>将它修改为：</p>
-<pre><code># Returns nothing.
-    def read_yaml(base, name)
-      self.content = File.read(File.join(base, name),:encoding=&gt;&quot;utf-8&quot;)
-</code></pre><p>然后确保所有带中文字符的markdown文件是无BOM的UTF-8格式即可。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> jekyll </tag>
-            
-            <tag> ruby </tag>
-            
-            <tag> error </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[巧妙交换值]]></title>
-      <url>/blog/2014/04/26/replace-a-and-b/</url>
-      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
-a = [b, b = a][0];
-a // 2
-b // 1
-</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> hack </tag>
-            
-            <tag> tips </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[jekyll中gsub未定义的错误]]></title>
       <url>/blog/2014/04/26/gsup-error-in-atom-file/</url>
       <content type="html"><![CDATA[<p>今天被 jekyll 编译时的一个问题搞疯了。</p>
@@ -8811,9 +8816,42 @@ b // 1
         
         <tags>
             
+            <tag> error </tag>
+            
             <tag> jekyll </tag>
             
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[jekyll编译时报错invalid byte sequence in GBK]]></title>
+      <url>/blog/2014/04/26/jekyll-error-when-compile/</url>
+      <content type="html"><![CDATA[<p>找到你的Ruby安装目录，如我的是：D:\Ruby193, 在里面找到文件D:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb<br>在该文件中找到下面句子：</p>
+<pre><code># Returns nothing.
+    def read_yaml(base, name)
+      self.content = File.read(File.join(base, name))
+</code></pre><p>将它修改为：</p>
+<pre><code># Returns nothing.
+    def read_yaml(base, name)
+      self.content = File.read(File.join(base, name),:encoding=&gt;&quot;utf-8&quot;)
+</code></pre><p>然后确保所有带中文字符的markdown文件是无BOM的UTF-8格式即可。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
             <tag> error </tag>
+            
+            <tag> jekyll </tag>
+            
+            <tag> ruby </tag>
             
         </tags>
         
@@ -9074,6 +9112,30 @@ document.body.innerHTML = oldHTML;
     </entry>
     
     <entry>
+      <title><![CDATA[老程序员Vs新程序员]]></title>
+      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
+</blockquote>
+<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 观点和感想 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> talk </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[npm穿墙]]></title>
       <url>/blog/2014/03/31/npm-cross-wall/</url>
       <content type="html"><![CDATA[<p>GWF 很给力，很多东西都能墙掉，但是把 npm 也纳入黑名单，不知道 GWFer 是怎么想的。翻墙翻了好多年了，原理其实也挺简单的，proxy 嘛！</p>
@@ -9117,30 +9179,6 @@ npm config set registry=http://registry.npmjs.org
             <tag> npm </tag>
             
             <tag> proxy </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[老程序员Vs新程序员]]></title>
-      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
-</blockquote>
-<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 观点和感想 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> talk </tag>
             
         </tags>
         
