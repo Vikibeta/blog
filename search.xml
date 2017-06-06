@@ -8,7 +8,9 @@
       <content type="html"><![CDATA[<p>相信很多人对 Node 的 Stream 已经不陌生了，不论是请求流、响应流、文件流还是 socket 流，这些流的底层都是使用 <code>stream</code> 模块封装的，甚至我们平时用的最多的 <code>console.log</code> 打印日志也使用了它，不信你打开 Node runtime 的源码，看看 <a href="https://github.com/nodejs/node/blob/master/lib/console.js#L82-L109" target="_blank" rel="external"><code>lib/console.js</code></a>：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params">ignoreErrors, stream, string, errorhandler</span>) </span>&#123;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">  stream.once(<span class="string">'error'</span>, noop);</div><div class="line">  stream.write(string, errorhandler);</div><div class="line">  <span class="comment">//...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">Console.prototype.log = <span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line">  write(<span class="keyword">this</span>._ignoreErrors,</div><div class="line">        <span class="keyword">this</span>._stdout,</div><div class="line">        <span class="string">`<span class="subst">$&#123;util.format.apply(<span class="literal">null</span>, args)&#125;</span>\n`</span>,</div><div class="line">        <span class="keyword">this</span>._stdoutErrorHandler);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多模块理解起来就顺畅多了。</p>
+<blockquote>
 <p>本文代码和图片可以在这里取用：<a href="https://github.com/barretlee/dive-into-node-stream" target="_blank" rel="external">https://github.com/barretlee/dive-into-node-stream</a>。</p>
+</blockquote>
 <h3 id="stream-模块"><a href="#stream-模块" class="headerlink" title="stream 模块"></a>stream 模块</h3><p>如果你了解 <a href="https://zh.wikipedia.org/zh-hans/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98" target="_blank" rel="external">生产者和消费者问题</a> 的解法，那理解 stream 就基本没有压力了，它不仅仅是资料的起点和落点，还包含了一系列状态控制，可以说一个 stream 就是一个状态管理单元。了解内部机制的最佳方式除了看 <a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">Node 官方文档</a>，还可以去看看 Node 的 <a href="https://github.com/nodejs/node/blob/master/lib/" target="_blank" rel="external">源码</a>：</p>
 <ul>
 <li><code>lib/module.js</code></li>
@@ -17,7 +19,7 @@
 <li><code>lib/_stream_tranform.js</code></li>
 <li><code>lib/_stream_duplex.js</code></li>
 </ul>
-<p>把 <code>Readable</code> 和 <code>Writable</code> 看明白，后面两者也就差不多理解了。</p>
+<p>把 <code>Readable</code> 和 <code>Writable</code> 看明白，Tranform 和 Duplex 就不难理解了。</p>
 <h3 id="Readable-Stream"><a href="#Readable-Stream" class="headerlink" title="Readable Stream"></a>Readable Stream</h3><p>Readable Stream 存在两种模式，一种是叫做 <code>Flowing Mode</code>，流动模式，在 Stream 上绑定 ondata 方法就会自动触发这个模式，比如：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> readable = getReadableStreamSomehow();</div><div class="line">readable.on(<span class="string">'data'</span>, (chunk) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`Received <span class="subst">$&#123;chunk.length&#125;</span> bytes of data.`</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>这个模式的流程图如下：</p>
@@ -83,7 +85,7 @@
 <p>Transform 的处理就是通过 <code>_transform</code> 函数将 Duplex 的 Readable 连接到 Writable，由于 Readable 的生产效率与 Writable 的消费效率是一样的，所以这里 Transform 内部不存在「背压」问题，背压问题的源头是外部的生产者和消费者速度差造成的。</p>
 <p>关于 Transfrom Stream，我写了一个简单的 Demo：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Transform = <span class="built_in">require</span>(<span class="string">'stream'</span>).Transform;</div><div class="line"><span class="keyword">const</span> MAP = &#123;</div><div class="line">  <span class="string">'Barret'</span>: <span class="string">'靖'</span>,</div><div class="line">  <span class="string">'Lee'</span>: <span class="string">'李'</span></div><div class="line">&#125;;</div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Translate</span> <span class="keyword">extends</span> <span class="title">Transform</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(dataSource, options) &#123;</div><div class="line">    <span class="keyword">super</span>(options);</div><div class="line">  &#125;</div><div class="line">  _transform(buf, enc, next) &#123;</div><div class="line">    <span class="keyword">const</span> key = buf.toString();</div><div class="line">    <span class="keyword">const</span> data = MAP[key];</div><div class="line">    <span class="keyword">this</span>.push(data);</div><div class="line">    next();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> transform = <span class="keyword">new</span> Translate();</div><div class="line">transform.on(<span class="string">'data'</span>, data =&gt; <span class="built_in">console</span>.log(data.toString()));</div><div class="line">transform.write(<span class="string">'Lee'</span>);</div><div class="line">transform.write(<span class="string">'Barret'</span>);</div><div class="line">transform.end();</div></pre></td></tr></table></figure>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文主要参考和查阅 Node 官网的文档和源码，细节问题都是从源码中找到的答案，如果有理解不准确之处，还请斧正。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本文主要参考和查阅 Node 官网的文档和源码，细节问题都是从源码中找到的答案，如有理解不准确之处，还请斧正。关于 Stream，这篇文章只是讲述了基础的原理，还有很多细节之处没有讲到，要真正理解它，还是需要多读读文档，写写代码。</p>
 <p>了解了这些 Stream 的内部机制，对我们后续深入理解上层代码有很大的促进作用，特别希望初学 Node 的同学花点时间进来看看。</p>
 <p>另外，本文代码和图片可以在这里取用：<a href="https://github.com/barretlee/dive-into-node-stream" target="_blank" rel="external">https://github.com/barretlee/dive-into-node-stream</a>。</p>
 ]]></content>
@@ -3866,7 +3868,7 @@
 <li><a href="http://www.csdn.net/article/1970-01-01/2815164" target="_blank" rel="external">http://www.csdn.net/article/1970-01-01/2815164</a> By 李晶</li>
 <li><a href="http://cnberg.com/archive/2013-fe/" target="_blank" rel="external">http://cnberg.com/archive/2013-fe/</a> By Berg</li>
 <li><a href="http://www.infoq.com/cn/articles/2014-review-front-end-part" target="_blank" rel="external">http://www.infoq.com/cn/articles/2014-review-front-end-part</a> By 黄丹</li>
-<li><a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x68;&#116;&#116;&#x70;&#58;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#46;&#99;&#111;&#109;&#x2f;&#64;&#115;&#104;&#x69;&#106;&#117;&#x76;&#x61;&#x72;&#x2f;&#x77;&#x65;&#x62;&#x2d;&#x64;&#101;&#x76;&#x65;&#108;&#x6f;&#112;&#x6d;&#101;&#x6e;&#x74;&#x2d;&#116;&#114;&#x65;&#x6e;&#100;&#115;&#x2d;&#102;&#111;&#x72;&#45;&#x32;&#48;&#x31;&#53;&#45;&#97;&#110;&#x64;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#x66;&#x35;&#x37;&#49;&#x38;">&#x68;&#116;&#116;&#x70;&#58;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#46;&#99;&#111;&#109;&#x2f;&#64;&#115;&#104;&#x69;&#106;&#117;&#x76;&#x61;&#x72;&#x2f;&#x77;&#x65;&#x62;&#x2d;&#x64;&#101;&#x76;&#x65;&#108;&#x6f;&#112;&#x6d;&#101;&#x6e;&#x74;&#x2d;&#116;&#114;&#x65;&#x6e;&#100;&#115;&#x2d;&#102;&#111;&#x72;&#45;&#x32;&#48;&#x31;&#53;&#45;&#97;&#110;&#x64;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#99;&#50;&#x64;&#x33;&#x63;&#x31;&#x65;&#x66;&#x35;&#x37;&#49;&#x38;</a> By Shiju Varghese</li>
+<li><a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#104;&#x74;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#x64;&#105;&#x75;&#109;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#x65;&#x62;&#x2d;&#100;&#x65;&#118;&#101;&#x6c;&#x6f;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#x72;&#101;&#110;&#100;&#115;&#45;&#x66;&#x6f;&#114;&#x2d;&#x32;&#48;&#49;&#53;&#45;&#97;&#x6e;&#100;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#x63;&#x32;&#100;&#51;&#99;&#x31;&#x65;&#102;&#53;&#x37;&#x31;&#56;">&#104;&#x74;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#x64;&#105;&#x75;&#109;&#46;&#99;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#117;&#118;&#x61;&#x72;&#47;&#x77;&#x65;&#x62;&#x2d;&#100;&#x65;&#118;&#101;&#x6c;&#x6f;&#112;&#109;&#101;&#x6e;&#116;&#45;&#116;&#x72;&#101;&#110;&#100;&#115;&#45;&#x66;&#x6f;&#114;&#x2d;&#x32;&#48;&#49;&#53;&#45;&#97;&#x6e;&#100;&#45;&#x62;&#x65;&#121;&#x6f;&#110;&#x64;&#45;&#x63;&#x32;&#100;&#51;&#99;&#x31;&#x65;&#102;&#53;&#x37;&#x31;&#56;</a> By Shiju Varghese</li>
 <li><a href="http://github.com/kuitos/kuitos.github.io/issues/32" target="_blank" rel="external">http://github.com/kuitos/kuitos.github.io/issues/32</a> By Kuitos</li>
 </ul>
 ]]></content>
@@ -8378,9 +8380,9 @@ console.log(root);
         
         <tags>
             
-            <tag> JavaScript </tag>
-            
             <tag> 解析 </tag>
+            
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -8460,6 +8462,45 @@ console.log(root);
     </entry>
     
     <entry>
+      <title><![CDATA[当正则匹配零个字符]]></title>
+      <url>/blog/2014/04/28/reg-match-null/</url>
+      <content type="html"><![CDATA[<pre><code>&quot;something&quot;.match(/\s*(.*?)\s*/)
+&gt; [&apos;&apos;, &apos;&apos;]
+
+&quot;something&quot;.match(/^\s*(.*?)\s*$/)
+&gt; [&quot;something&quot;, &quot;something&quot;]
+</code></pre><p>为何前者匹配的结果为空？</p>
+<p>如果你不清楚正则的贪婪模式和非贪婪模式，请先移步<a href="http://www.cnblogs.com/hustskyking/p/how-regular-expressions-work.html#p-2.2" target="_blank" rel="external">这里</a>.</p>
+<p>整个匹配分为三步：</p>
+<ol>
+<li>第一个 \s*, 贪婪模式把字符全部吞掉，然后回溯，直到第一个字符任然没找到</li>
+<li>第二步是 .*? 由于是非贪婪模式匹配了一个字符就结束了，继续第三步</li>
+<li>第三步匹配失败，回溯到第二步，那第二步会继续减少吞掉的字符，于是字符数缩减到零。</li>
+</ol>
+<p>可能这么说还是不太清晰，先看看这个对比：<br><img src="//cloud.githubusercontent.com/assets/2698003/2816541/7e6c1076-cecb-11e3-823e-640e1b53ca00.jpg" alt="qq20140428195101"></p>
+<p>关于返回结果不是 null 而是 “”，你可以理解为匹配到了零个 a。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 正则 </tag>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[git版本回退操作]]></title>
       <url>/blog/2014/04/28/git-roll-back/</url>
       <content type="html"><![CDATA[<p>今天 github 上操作遇到了一个很头疼的问题，在某个文件中进行了误操作（有可能是加入了BOM头），diff 没看到差异，但是线上就是不正常显示。修改半天没用，只要回退版本。</p>
@@ -8508,111 +8549,6 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
             <tag> git </tag>
             
             <tag> CMS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[当正则匹配零个字符]]></title>
-      <url>/blog/2014/04/28/reg-match-null/</url>
-      <content type="html"><![CDATA[<pre><code>&quot;something&quot;.match(/\s*(.*?)\s*/)
-&gt; [&apos;&apos;, &apos;&apos;]
-
-&quot;something&quot;.match(/^\s*(.*?)\s*$/)
-&gt; [&quot;something&quot;, &quot;something&quot;]
-</code></pre><p>为何前者匹配的结果为空？</p>
-<p>如果你不清楚正则的贪婪模式和非贪婪模式，请先移步<a href="http://www.cnblogs.com/hustskyking/p/how-regular-expressions-work.html#p-2.2" target="_blank" rel="external">这里</a>.</p>
-<p>整个匹配分为三步：</p>
-<ol>
-<li>第一个 \s*, 贪婪模式把字符全部吞掉，然后回溯，直到第一个字符任然没找到</li>
-<li>第二步是 .*? 由于是非贪婪模式匹配了一个字符就结束了，继续第三步</li>
-<li>第三步匹配失败，回溯到第二步，那第二步会继续减少吞掉的字符，于是字符数缩减到零。</li>
-</ol>
-<p>可能这么说还是不太清晰，先看看这个对比：<br><img src="//cloud.githubusercontent.com/assets/2698003/2816541/7e6c1076-cecb-11e3-823e-640e1b53ca00.jpg" alt="qq20140428195101"></p>
-<p>关于返回结果不是 null 而是 “”，你可以理解为匹配到了零个 a。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 正则 </tag>
-            
-            <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[gem速度慢]]></title>
-      <url>/blog/2014/04/27/gem-sources/</url>
-      <content type="html"><![CDATA[<p>删除本来的源，添加淘宝的源。</p>
-<p>1 查看源</p>
-<pre><code>gem sources list
-</code></pre><p>2 删除list中的源</p>
-<pre><code>gem sources --remove http://rubygems.org/
-</code></pre><p>3 查看是否已经删除</p>
-<pre><code>重复1,结果为空就正确
-</code></pre><p>4 添加淘宝的源</p>
-<pre><code>gem sources -a http://ruby.taobao.org/
-</code></pre>]]></content>
-      
-        <categories>
-            
-            <category> 杂物间 </category>
-            
-            <category> 网络交互 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> ruby </tag>
-            
-            <tag> gem </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Ubuntu下Rhythmbox mp3音乐乱码]]></title>
-      <url>/blog/2014/04/27/filename-messy-code/</url>
-      <content type="html"><![CDATA[<p>linux系统遇到点乱码问题是很正常的，你碰到的问题，别人一般会已经碰到过，甚至已经有了很好的解决方案。</p>
-<p>今天遇到的问题是：Rhythmbox mp3音乐乱码</p>
-<p>处理方案：</p>
-<pre><code>sudo vim /etc/profile  # 类似 windows 下的环境变量
-# 添加
-export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030
-export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
-</code></pre><p><img src="//cloud.githubusercontent.com/assets/2698003/2811361/cd93a704-ce17-11e3-9b5d-a00b8c0f6c03.jpg" alt="Rhythmbox mp3音乐乱码"></p>
-<p>重启电脑，没想到不用重启的方法，<code>source ~/.profile</code> 没效果。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 杂物间 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> messy </tag>
-            
-            <tag> 乱码 </tag>
-            
-            <tag> Ubuntu </tag>
             
         </tags>
         
@@ -8689,60 +8625,66 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
     </entry>
     
     <entry>
-      <title><![CDATA[jekyll中gsub未定义的错误]]></title>
-      <url>/blog/2014/04/26/gsup-error-in-atom-file/</url>
-      <content type="html"><![CDATA[<p>今天被 jekyll 编译时的一个问题搞疯了。</p>
-<blockquote>
-<p>Liquid Exception: undefined method `gsub’ for nil:NilClass in atom.xml</p>
-</blockquote>
-<p>上面这个错误，开始以为时jekyll的版本问题，后来又以为时 UIT8 编码错误，再继续折腾，看了很多博客还是没有处理好。</p>
-<p>在 <code>atom.xml</code> 中我写了一句 ，以前一直是这样的啊，没报错。不知道 github pages 的后台 jekyll 编译器是不是做了版本或者其他方面的修改，定位到这个位置之后，把内容改成了</p>
-<pre><code>\{\{ post.excerpt }}
-\{\{ post.content }} # 改成这个也可以，只是内容太多，我不喜欢
-</code></pre><p>差不多整了我两个小时，这么点小错误，妹的！</p>
-]]></content>
+      <title><![CDATA[gem速度慢]]></title>
+      <url>/blog/2014/04/27/gem-sources/</url>
+      <content type="html"><![CDATA[<p>删除本来的源，添加淘宝的源。</p>
+<p>1 查看源</p>
+<pre><code>gem sources list
+</code></pre><p>2 删除list中的源</p>
+<pre><code>gem sources --remove http://rubygems.org/
+</code></pre><p>3 查看是否已经删除</p>
+<pre><code>重复1,结果为空就正确
+</code></pre><p>4 添加淘宝的源</p>
+<pre><code>gem sources -a http://ruby.taobao.org/
+</code></pre>]]></content>
       
         <categories>
             
-            <category> 前端杂烩 </category>
+            <category> 杂物间 </category>
+            
+            <category> 网络交互 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> error </tag>
+            <tag> ruby </tag>
             
-            <tag> jekyll </tag>
+            <tag> gem </tag>
             
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[巧妙交换值]]></title>
-      <url>/blog/2014/04/26/replace-a-and-b/</url>
-      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
-a = [b, b = a][0];
-a // 2
-b // 1
-</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+      <title><![CDATA[Ubuntu下Rhythmbox mp3音乐乱码]]></title>
+      <url>/blog/2014/04/27/filename-messy-code/</url>
+      <content type="html"><![CDATA[<p>linux系统遇到点乱码问题是很正常的，你碰到的问题，别人一般会已经碰到过，甚至已经有了很好的解决方案。</p>
+<p>今天遇到的问题是：Rhythmbox mp3音乐乱码</p>
+<p>处理方案：</p>
+<pre><code>sudo vim /etc/profile  # 类似 windows 下的环境变量
+# 添加
+export GST_ID3_TAG_ENCODING=GBK:UTF-8:GB18030
+export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
+</code></pre><p><img src="//cloud.githubusercontent.com/assets/2698003/2811361/cd93a704-ce17-11e3-9b5d-a00b8c0f6c03.jpg" alt="Rhythmbox mp3音乐乱码"></p>
+<p>重启电脑，没想到不用重启的方法，<code>source ~/.profile</code> 没效果。</p>
 ]]></content>
       
         <categories>
             
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
+            <category> 杂物间 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> hack </tag>
+            <tag> messy </tag>
             
-            <tag> tips </tag>
+            <tag> 乱码 </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
         
@@ -8807,11 +8749,71 @@ xclip -sel clip &lt; FILE
         
         <tags>
             
-            <tag> error </tag>
-            
             <tag> jekyll </tag>
             
             <tag> ruby </tag>
+            
+            <tag> error </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[巧妙交换值]]></title>
+      <url>/blog/2014/04/26/replace-a-and-b/</url>
+      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
+a = [b, b = a][0];
+a // 2
+b // 1
+</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hack </tag>
+            
+            <tag> tips </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[jekyll中gsub未定义的错误]]></title>
+      <url>/blog/2014/04/26/gsup-error-in-atom-file/</url>
+      <content type="html"><![CDATA[<p>今天被 jekyll 编译时的一个问题搞疯了。</p>
+<blockquote>
+<p>Liquid Exception: undefined method `gsub’ for nil:NilClass in atom.xml</p>
+</blockquote>
+<p>上面这个错误，开始以为时jekyll的版本问题，后来又以为时 UIT8 编码错误，再继续折腾，看了很多博客还是没有处理好。</p>
+<p>在 <code>atom.xml</code> 中我写了一句 ，以前一直是这样的啊，没报错。不知道 github pages 的后台 jekyll 编译器是不是做了版本或者其他方面的修改，定位到这个位置之后，把内容改成了</p>
+<pre><code>\{\{ post.excerpt }}
+\{\{ post.content }} # 改成这个也可以，只是内容太多，我不喜欢
+</code></pre><p>差不多整了我两个小时，这么点小错误，妹的！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> jekyll </tag>
+            
+            <tag> error </tag>
             
         </tags>
         
@@ -9038,6 +9040,40 @@ document.body.innerHTML = oldHTML;
     </entry>
     
     <entry>
+      <title><![CDATA[webview中的点击高亮问题]]></title>
+      <url>/blog/2014/03/31/tap-highlight-in-webview/</url>
+      <content type="html"><![CDATA[<p>这两天在做一个淘金币的小游戏，测试页面的时候还挺正常的，放到webview（嵌入诸如微信、微博等客户端的网页容器）中就出问题了。</p>
+<p>给元素绑定了一个 tap 事件，点击元素，该元素周边会出现点东西，IOS 中是个半透明的灰色背景，在 android 中出现红色的边框，不仅影响美感，貌似还会影响性能（这点东西渲染出来需要时间，会阻塞 JS 中控制的元素渲染）。</p>
+<p>开始本以为使用 user-select 可以干掉这玩意儿，结果无效，网上寻觅半天之后，找到了问题。</p>
+<p>css 中有个属性叫做 -webkit-tap-highlight-color ，顾名思义，就是点击元素的时候会有一个高亮的效果。当然不能把他称之为 bug，这也是浏览器为了让用户知道你点中了某个东西，给他醒目的提示，算是增强体验，但是在一些场景中，这不仅没有增强体验，还会影响体验。</p>
+<p>解决方案：</p>
+<pre><code>.obj {-webkit-tap-highlight-color:rgba(0,0,0,0);}
+</code></pre><p>有些机子可能比较坑爹，rgba 这种方式支持的不是很好，我们可以用 transparent 来给他透明化。</p>
+<pre><code>.obj {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+}
+</code></pre><p>小小分享。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> webview </tag>
+            
+            <tag> highlight </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[npm穿墙]]></title>
       <url>/blog/2014/03/31/npm-cross-wall/</url>
       <content type="html"><![CDATA[<p>GWF 很给力，很多东西都能墙掉，但是把 npm 也纳入黑名单，不知道 GWFer 是怎么想的。翻墙翻了好多年了，原理其实也挺简单的，proxy 嘛！</p>
@@ -9081,40 +9117,6 @@ npm config set registry=http://registry.npmjs.org
             <tag> npm </tag>
             
             <tag> proxy </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[webview中的点击高亮问题]]></title>
-      <url>/blog/2014/03/31/tap-highlight-in-webview/</url>
-      <content type="html"><![CDATA[<p>这两天在做一个淘金币的小游戏，测试页面的时候还挺正常的，放到webview（嵌入诸如微信、微博等客户端的网页容器）中就出问题了。</p>
-<p>给元素绑定了一个 tap 事件，点击元素，该元素周边会出现点东西，IOS 中是个半透明的灰色背景，在 android 中出现红色的边框，不仅影响美感，貌似还会影响性能（这点东西渲染出来需要时间，会阻塞 JS 中控制的元素渲染）。</p>
-<p>开始本以为使用 user-select 可以干掉这玩意儿，结果无效，网上寻觅半天之后，找到了问题。</p>
-<p>css 中有个属性叫做 -webkit-tap-highlight-color ，顾名思义，就是点击元素的时候会有一个高亮的效果。当然不能把他称之为 bug，这也是浏览器为了让用户知道你点中了某个东西，给他醒目的提示，算是增强体验，但是在一些场景中，这不仅没有增强体验，还会影响体验。</p>
-<p>解决方案：</p>
-<pre><code>.obj {-webkit-tap-highlight-color:rgba(0,0,0,0);}
-</code></pre><p>有些机子可能比较坑爹，rgba 这种方式支持的不是很好，我们可以用 transparent 来给他透明化。</p>
-<pre><code>.obj {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent; /* For some Androids */
-}
-</code></pre><p>小小分享。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> webview </tag>
-            
-            <tag> highlight </tag>
             
         </tags>
         
