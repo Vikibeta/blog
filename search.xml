@@ -3151,9 +3151,9 @@
         
         <tags>
             
-            <tag> 淘宝首页 </tag>
-            
             <tag> 个性化 </tag>
+            
+            <tag> 淘宝首页 </tag>
             
         </tags>
         
@@ -4000,7 +4000,7 @@
 <li><a href="http://www.csdn.net/article/1970-01-01/2815164" target="_blank" rel="external">http://www.csdn.net/article/1970-01-01/2815164</a> By 李晶</li>
 <li><a href="http://cnberg.com/archive/2013-fe/" target="_blank" rel="external">http://cnberg.com/archive/2013-fe/</a> By Berg</li>
 <li><a href="http://www.infoq.com/cn/articles/2014-review-front-end-part" target="_blank" rel="external">http://www.infoq.com/cn/articles/2014-review-front-end-part</a> By 黄丹</li>
-<li><a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#104;&#x74;&#x74;&#x70;&#58;&#x2f;&#x2f;&#109;&#101;&#x64;&#x69;&#117;&#109;&#x2e;&#x63;&#x6f;&#109;&#x2f;&#64;&#x73;&#x68;&#105;&#x6a;&#x75;&#118;&#97;&#x72;&#x2f;&#119;&#x65;&#x62;&#x2d;&#100;&#101;&#x76;&#x65;&#x6c;&#x6f;&#x70;&#x6d;&#x65;&#110;&#116;&#x2d;&#116;&#114;&#x65;&#x6e;&#x64;&#115;&#45;&#102;&#111;&#x72;&#45;&#x32;&#x30;&#49;&#x35;&#x2d;&#x61;&#110;&#100;&#x2d;&#98;&#x65;&#x79;&#111;&#x6e;&#x64;&#x2d;&#99;&#x32;&#100;&#x33;&#x63;&#x31;&#x65;&#102;&#53;&#55;&#x31;&#56;">&#104;&#x74;&#x74;&#x70;&#58;&#x2f;&#x2f;&#109;&#101;&#x64;&#x69;&#117;&#109;&#x2e;&#x63;&#x6f;&#109;&#x2f;&#64;&#x73;&#x68;&#105;&#x6a;&#x75;&#118;&#97;&#x72;&#x2f;&#119;&#x65;&#x62;&#x2d;&#100;&#101;&#x76;&#x65;&#x6c;&#x6f;&#x70;&#x6d;&#x65;&#110;&#116;&#x2d;&#116;&#114;&#x65;&#x6e;&#x64;&#115;&#45;&#102;&#111;&#x72;&#45;&#x32;&#x30;&#49;&#x35;&#x2d;&#x61;&#110;&#100;&#x2d;&#98;&#x65;&#x79;&#111;&#x6e;&#x64;&#x2d;&#99;&#x32;&#100;&#x33;&#x63;&#x31;&#x65;&#102;&#53;&#55;&#x31;&#56;</a> By Shiju Varghese</li>
+<li><a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#104;&#x74;&#116;&#112;&#58;&#x2f;&#47;&#x6d;&#x65;&#100;&#105;&#x75;&#x6d;&#x2e;&#x63;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#x75;&#x76;&#97;&#x72;&#47;&#x77;&#x65;&#x62;&#45;&#x64;&#x65;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#x6e;&#x74;&#x2d;&#116;&#x72;&#x65;&#110;&#x64;&#115;&#x2d;&#102;&#x6f;&#114;&#45;&#50;&#48;&#49;&#x35;&#45;&#x61;&#110;&#x64;&#45;&#98;&#101;&#x79;&#111;&#110;&#x64;&#45;&#99;&#x32;&#100;&#51;&#x63;&#x31;&#x65;&#x66;&#53;&#x37;&#49;&#56;">&#104;&#x74;&#116;&#112;&#58;&#x2f;&#47;&#x6d;&#x65;&#100;&#105;&#x75;&#x6d;&#x2e;&#x63;&#x6f;&#x6d;&#47;&#64;&#x73;&#x68;&#x69;&#x6a;&#x75;&#x76;&#97;&#x72;&#47;&#x77;&#x65;&#x62;&#45;&#x64;&#x65;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#x6e;&#x74;&#x2d;&#116;&#x72;&#x65;&#110;&#x64;&#115;&#x2d;&#102;&#x6f;&#114;&#45;&#50;&#48;&#49;&#x35;&#45;&#x61;&#110;&#x64;&#45;&#98;&#101;&#x79;&#111;&#110;&#x64;&#45;&#99;&#x32;&#100;&#51;&#x63;&#x31;&#x65;&#x66;&#53;&#x37;&#49;&#56;</a> By Shiju Varghese</li>
 <li><a href="http://github.com/kuitos/kuitos.github.io/issues/32" target="_blank" rel="external">http://github.com/kuitos/kuitos.github.io/issues/32</a> By Kuitos</li>
 </ul>
 ]]></content>
@@ -6087,36 +6087,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[this的指向]]></title>
-      <url>/blog/2015/04/13/this-reference/</url>
-      <content type="html"><![CDATA[<p>网友问题：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"The Window"</span>;   </div><div class="line">　　<span class="keyword">var</span> object = &#123;  </div><div class="line">　　　　<span class="attr">name</span> : <span class="string">"My Object"</span>,  </div><div class="line">　　　　<span class="attr">getNameFunc</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">　　　　　　　　<span class="keyword">return</span> <span class="keyword">this</span>.name;  </div><div class="line">　　　　&#125;   </div><div class="line">&#125;;  </div><div class="line"><span class="keyword">var</span> a = object.getNameFunc;</div><div class="line">alert(a());</div><div class="line">alert(object.getNameFunc());</div></pre></td></tr></table></figure>
-<p>原因：</p>
-<p><code>object.getNameFunc()</code> ，此时的 <code>object.getNameFunc</code> 为引用类型，其 base 为 <code>object</code>，this 指向的是 base，所以返回 <code>object.name</code> 的值</p>
-<p><code>name = object.getNameFunc</code>, <code>test</code> 作为标识符，生成了其他引用类型的值，此时 base 已经从 <code>object</code> 重置为 <code>null</code>，也就是会指向 global（window），所以返回的是 window.name 的值。</p>
-<p>问题的关键在于「引用类型（type Reference）的中间值发生改变」</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> this </tag>
-            
-            <tag> reference </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Xcode-select Error]]></title>
       <url>/blog/2015/04/13/xcode-select-error/</url>
       <content type="html"><![CDATA[<p>错误信息：</p>
@@ -6141,6 +6111,36 @@
             <tag> Xcode </tag>
             
             <tag> Error </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[this的指向]]></title>
+      <url>/blog/2015/04/13/this-reference/</url>
+      <content type="html"><![CDATA[<p>网友问题：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"The Window"</span>;   </div><div class="line">　　<span class="keyword">var</span> object = &#123;  </div><div class="line">　　　　<span class="attr">name</span> : <span class="string">"My Object"</span>,  </div><div class="line">　　　　<span class="attr">getNameFunc</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">　　　　　　　　<span class="keyword">return</span> <span class="keyword">this</span>.name;  </div><div class="line">　　　　&#125;   </div><div class="line">&#125;;  </div><div class="line"><span class="keyword">var</span> a = object.getNameFunc;</div><div class="line">alert(a());</div><div class="line">alert(object.getNameFunc());</div></pre></td></tr></table></figure>
+<p>原因：</p>
+<p><code>object.getNameFunc()</code> ，此时的 <code>object.getNameFunc</code> 为引用类型，其 base 为 <code>object</code>，this 指向的是 base，所以返回 <code>object.name</code> 的值</p>
+<p><code>name = object.getNameFunc</code>, <code>test</code> 作为标识符，生成了其他引用类型的值，此时 base 已经从 <code>object</code> 重置为 <code>null</code>，也就是会指向 global（window），所以返回的是 window.name 的值。</p>
+<p>问题的关键在于「引用类型（type Reference）的中间值发生改变」</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> this </tag>
+            
+            <tag> reference </tag>
             
         </tags>
         
@@ -8374,30 +8374,6 @@ document.onclick = function(){
     </entry>
     
     <entry>
-      <title><![CDATA[css选中前一个元素]]></title>
-      <url>/blog/2014/04/30/previous-element-with-css/</url>
-      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
-<pre><code>!previous + next {}
-</code></pre><p>这样选中上一个元素，那么就可以使用</p>
-<p>!* + obj 来选中 obj 的前一个元素了</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[git切换到远程分支]]></title>
       <url>/blog/2014/04/30/switch-branch-in-git/</url>
       <content type="html"><![CDATA[<p>远程仓库 git clone 下来，当你执行 git branch，你只会看到</p>
@@ -8437,6 +8413,30 @@ master
         <tags>
             
             <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[css选中前一个元素]]></title>
+      <url>/blog/2014/04/30/previous-element-with-css/</url>
+      <content type="html"><![CDATA[<p>想了半天没找到 hack 的方式，CSS4 也没有提供类似的方法，不过在以后的草案中可能会出现 </p>
+<pre><code>!previous + next {}
+</code></pre><p>这样选中上一个元素，那么就可以使用</p>
+<p>!* + obj 来选中 obj 的前一个元素了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
             
         </tags>
         
@@ -8823,35 +8823,6 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
     </entry>
     
     <entry>
-      <title><![CDATA[巧妙交换值]]></title>
-      <url>/blog/2014/04/26/replace-a-and-b/</url>
-      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
-a = [b, b = a][0];
-a // 2
-b // 1
-</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> hack </tag>
-            
-            <tag> tips </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[jekyll编译时报错invalid byte sequence in GBK]]></title>
       <url>/blog/2014/04/26/jekyll-error-when-compile/</url>
       <content type="html"><![CDATA[<p>找到你的Ruby安装目录，如我的是：D:\Ruby193, 在里面找到文件D:\Ruby193\lib\ruby\gems\1.9.1\gems\jekyll-0.12.0\lib\jekyll\convertible.rb<br>在该文件中找到下面句子：</p>
@@ -8910,6 +8881,35 @@ b // 1
             <tag> error </tag>
             
             <tag> jekyll </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[巧妙交换值]]></title>
+      <url>/blog/2014/04/26/replace-a-and-b/</url>
+      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
+a = [b, b = a][0];
+a // 2
+b // 1
+</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hack </tag>
+            
+            <tag> tips </tag>
             
         </tags>
         
@@ -9172,64 +9172,6 @@ document.body.innerHTML = oldHTML;
     </entry>
     
     <entry>
-      <title><![CDATA[webview中的点击高亮问题]]></title>
-      <url>/blog/2014/03/31/tap-highlight-in-webview/</url>
-      <content type="html"><![CDATA[<p>这两天在做一个淘金币的小游戏，测试页面的时候还挺正常的，放到webview（嵌入诸如微信、微博等客户端的网页容器）中就出问题了。</p>
-<p>给元素绑定了一个 tap 事件，点击元素，该元素周边会出现点东西，IOS 中是个半透明的灰色背景，在 android 中出现红色的边框，不仅影响美感，貌似还会影响性能（这点东西渲染出来需要时间，会阻塞 JS 中控制的元素渲染）。</p>
-<p>开始本以为使用 user-select 可以干掉这玩意儿，结果无效，网上寻觅半天之后，找到了问题。</p>
-<p>css 中有个属性叫做 -webkit-tap-highlight-color ，顾名思义，就是点击元素的时候会有一个高亮的效果。当然不能把他称之为 bug，这也是浏览器为了让用户知道你点中了某个东西，给他醒目的提示，算是增强体验，但是在一些场景中，这不仅没有增强体验，还会影响体验。</p>
-<p>解决方案：</p>
-<pre><code>.obj {-webkit-tap-highlight-color:rgba(0,0,0,0);}
-</code></pre><p>有些机子可能比较坑爹，rgba 这种方式支持的不是很好，我们可以用 transparent 来给他透明化。</p>
-<pre><code>.obj {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-tap-highlight-color: transparent; /* For some Androids */
-}
-</code></pre><p>小小分享。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> webview </tag>
-            
-            <tag> highlight </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[老程序员Vs新程序员]]></title>
-      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
-</blockquote>
-<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 观点和感想 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> talk </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[npm穿墙]]></title>
       <url>/blog/2014/03/31/npm-cross-wall/</url>
       <content type="html"><![CDATA[<p>GWF 很给力，很多东西都能墙掉，但是把 npm 也纳入黑名单，不知道 GWFer 是怎么想的。翻墙翻了好多年了，原理其实也挺简单的，proxy 嘛！</p>
@@ -9273,6 +9215,64 @@ npm config set registry=http://registry.npmjs.org
             <tag> npm </tag>
             
             <tag> proxy </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[老程序员Vs新程序员]]></title>
+      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
+</blockquote>
+<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 观点和感想 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> talk </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webview中的点击高亮问题]]></title>
+      <url>/blog/2014/03/31/tap-highlight-in-webview/</url>
+      <content type="html"><![CDATA[<p>这两天在做一个淘金币的小游戏，测试页面的时候还挺正常的，放到webview（嵌入诸如微信、微博等客户端的网页容器）中就出问题了。</p>
+<p>给元素绑定了一个 tap 事件，点击元素，该元素周边会出现点东西，IOS 中是个半透明的灰色背景，在 android 中出现红色的边框，不仅影响美感，貌似还会影响性能（这点东西渲染出来需要时间，会阻塞 JS 中控制的元素渲染）。</p>
+<p>开始本以为使用 user-select 可以干掉这玩意儿，结果无效，网上寻觅半天之后，找到了问题。</p>
+<p>css 中有个属性叫做 -webkit-tap-highlight-color ，顾名思义，就是点击元素的时候会有一个高亮的效果。当然不能把他称之为 bug，这也是浏览器为了让用户知道你点中了某个东西，给他醒目的提示，算是增强体验，但是在一些场景中，这不仅没有增强体验，还会影响体验。</p>
+<p>解决方案：</p>
+<pre><code>.obj {-webkit-tap-highlight-color:rgba(0,0,0,0);}
+</code></pre><p>有些机子可能比较坑爹，rgba 这种方式支持的不是很好，我们可以用 transparent 来给他透明化。</p>
+<pre><code>.obj {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+}
+</code></pre><p>小小分享。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> webview </tag>
+            
+            <tag> highlight </tag>
             
         </tags>
         
