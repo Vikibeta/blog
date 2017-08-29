@@ -4000,7 +4000,7 @@
 <li><a href="http://www.csdn.net/article/1970-01-01/2815164" target="_blank" rel="external">http://www.csdn.net/article/1970-01-01/2815164</a> By 李晶</li>
 <li><a href="http://cnberg.com/archive/2013-fe/" target="_blank" rel="external">http://cnberg.com/archive/2013-fe/</a> By Berg</li>
 <li><a href="http://www.infoq.com/cn/articles/2014-review-front-end-part" target="_blank" rel="external">http://www.infoq.com/cn/articles/2014-review-front-end-part</a> By 黄丹</li>
-<li><a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#104;&#116;&#x74;&#x70;&#x3a;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#x2e;&#x63;&#111;&#109;&#x2f;&#64;&#x73;&#x68;&#x69;&#x6a;&#x75;&#118;&#97;&#114;&#47;&#119;&#101;&#98;&#45;&#x64;&#x65;&#118;&#x65;&#108;&#111;&#112;&#x6d;&#101;&#110;&#116;&#45;&#x74;&#114;&#x65;&#x6e;&#x64;&#x73;&#x2d;&#x66;&#x6f;&#x72;&#x2d;&#x32;&#x30;&#x31;&#53;&#45;&#x61;&#110;&#x64;&#x2d;&#x62;&#x65;&#121;&#x6f;&#x6e;&#x64;&#45;&#99;&#x32;&#100;&#51;&#x63;&#x31;&#101;&#x66;&#53;&#55;&#49;&#56;">&#104;&#116;&#x74;&#x70;&#x3a;&#x2f;&#47;&#x6d;&#x65;&#x64;&#x69;&#117;&#109;&#x2e;&#x63;&#111;&#109;&#x2f;&#64;&#x73;&#x68;&#x69;&#x6a;&#x75;&#118;&#97;&#114;&#47;&#119;&#101;&#98;&#45;&#x64;&#x65;&#118;&#x65;&#108;&#111;&#112;&#x6d;&#101;&#110;&#116;&#45;&#x74;&#114;&#x65;&#x6e;&#x64;&#x73;&#x2d;&#x66;&#x6f;&#x72;&#x2d;&#x32;&#x30;&#x31;&#53;&#45;&#x61;&#110;&#x64;&#x2d;&#x62;&#x65;&#121;&#x6f;&#x6e;&#x64;&#45;&#99;&#x32;&#100;&#51;&#x63;&#x31;&#101;&#x66;&#53;&#55;&#49;&#56;</a> By Shiju Varghese</li>
+<li><a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#58;&#x68;&#116;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#100;&#x69;&#117;&#x6d;&#x2e;&#x63;&#111;&#x6d;&#x2f;&#64;&#x73;&#104;&#105;&#x6a;&#x75;&#x76;&#x61;&#114;&#47;&#119;&#x65;&#x62;&#x2d;&#x64;&#x65;&#118;&#x65;&#x6c;&#x6f;&#x70;&#109;&#101;&#110;&#x74;&#x2d;&#x74;&#114;&#x65;&#x6e;&#100;&#115;&#45;&#x66;&#x6f;&#x72;&#x2d;&#50;&#x30;&#49;&#53;&#x2d;&#97;&#110;&#100;&#x2d;&#x62;&#x65;&#x79;&#x6f;&#x6e;&#x64;&#45;&#x63;&#50;&#x64;&#x33;&#99;&#x31;&#x65;&#102;&#53;&#55;&#x31;&#56;">&#x68;&#116;&#116;&#x70;&#58;&#47;&#47;&#x6d;&#101;&#100;&#x69;&#117;&#x6d;&#x2e;&#x63;&#111;&#x6d;&#x2f;&#64;&#x73;&#104;&#105;&#x6a;&#x75;&#x76;&#x61;&#114;&#47;&#119;&#x65;&#x62;&#x2d;&#x64;&#x65;&#118;&#x65;&#x6c;&#x6f;&#x70;&#109;&#101;&#110;&#x74;&#x2d;&#x74;&#114;&#x65;&#x6e;&#100;&#115;&#45;&#x66;&#x6f;&#x72;&#x2d;&#50;&#x30;&#49;&#53;&#x2d;&#97;&#110;&#100;&#x2d;&#x62;&#x65;&#x79;&#x6f;&#x6e;&#x64;&#45;&#x63;&#50;&#x64;&#x33;&#99;&#x31;&#x65;&#102;&#53;&#55;&#x31;&#56;</a> By Shiju Varghese</li>
 <li><a href="http://github.com/kuitos/kuitos.github.io/issues/32" target="_blank" rel="external">http://github.com/kuitos/kuitos.github.io/issues/32</a> By Kuitos</li>
 </ul>
 ]]></content>
@@ -7431,31 +7431,6 @@ document.onclick = function(){
     </entry>
     
     <entry>
-      <title><![CDATA[￥符号，少了一横]]></title>
-      <url>/blog/2014/08/29/dollar-in-different-face/</url>
-      <content type="html"><![CDATA[<p>跟钱有关的问题。</p>
-<p>数值前加一个 ￥ 符号，可是视觉同学一定要使用两横的 dollar 符号。咋弄？</p>
-<p>这个符号在不同字体下呈现的效果是不一样的，微软雅黑下是两横，不过显示的并不好看，正确的处理方式应该是：</p>
-<pre><code>&lt;style&gt;i {font-family:&quot;Microsoft Yahei&quot;;}&lt;/style&gt;
-&lt;i&gt;&amp;yen;&lt;/i&gt;
-</code></pre>]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> css </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[评《别太听上司的话》]]></title>
       <url>/blog/2014/08/29/be-patient/</url>
       <content type="html"><![CDATA[<p>今天早上逛博客园，看到了一篇吐槽的文章：<a href="http://www.cnblogs.com/beatless/p/3944101.html" target="_blank" rel="external">别太听上司的话</a>，有些感触：</p>
@@ -7479,6 +7454,31 @@ document.onclick = function(){
             <tag> life </tag>
             
             <tag> work </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[￥符号，少了一横]]></title>
+      <url>/blog/2014/08/29/dollar-in-different-face/</url>
+      <content type="html"><![CDATA[<p>跟钱有关的问题。</p>
+<p>数值前加一个 ￥ 符号，可是视觉同学一定要使用两横的 dollar 符号。咋弄？</p>
+<p>这个符号在不同字体下呈现的效果是不一样的，微软雅黑下是两横，不过显示的并不好看，正确的处理方式应该是：</p>
+<pre><code>&lt;style&gt;i {font-family:&quot;Microsoft Yahei&quot;;}&lt;/style&gt;
+&lt;i&gt;&amp;yen;&lt;/i&gt;
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> css </tag>
             
         </tags>
         
@@ -7611,6 +7611,39 @@ document.onclick = function(){
     </entry>
     
     <entry>
+      <title><![CDATA[Object + Array]]></title>
+      <url>/blog/2014/08/07/%7B%7D+%5B%5D/</url>
+      <content type="html"><![CDATA[<p><strong>问题：</strong></p>
+<pre><code>{} + []
+</code></pre><ul>
+<li>{} + [] 结果应该是 0</li>
+<li>console.log({} + []) 结果应该是 object object</li>
+</ul>
+<p>两个 {} 的语义不一样,前者被解析成 {}; +[]; 后者 {} 为对象.</p>
+<ul>
+<li><p>操作符，针对非 Number 的处理内部调用 ToPrimary() 函数, {} 和 [] 都执行了自身的 toString 函数</p>
+<p>  ({} + [])<br>  ({}) + []</p>
+</li>
+</ul>
+<p>这些表达式中，{}都被当做对象来解析，而不是 作用块</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[绝对定位，margin:0 auto，让元素竖直居中]]></title>
       <url>/blog/2014/08/07/position-and-margin/</url>
       <content type="html"><![CDATA[<p><strong>问题：</strong></p>
@@ -7640,39 +7673,6 @@ document.onclick = function(){
         <tags>
             
             <tag> CSS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Object + Array]]></title>
-      <url>/blog/2014/08/07/%7B%7D+%5B%5D/</url>
-      <content type="html"><![CDATA[<p><strong>问题：</strong></p>
-<pre><code>{} + []
-</code></pre><ul>
-<li>{} + [] 结果应该是 0</li>
-<li>console.log({} + []) 结果应该是 object object</li>
-</ul>
-<p>两个 {} 的语义不一样,前者被解析成 {}; +[]; 后者 {} 为对象.</p>
-<ul>
-<li><p>操作符，针对非 Number 的处理内部调用 ToPrimary() 函数, {} 和 [] 都执行了自身的 toString 函数</p>
-<p>  ({} + [])<br>  ({}) + []</p>
-</li>
-</ul>
-<p>这些表达式中，{}都被当做对象来解析，而不是 作用块</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> hack </tag>
             
         </tags>
         
@@ -8443,44 +8443,6 @@ master
     </entry>
     
     <entry>
-      <title><![CDATA[mysqldump的使用]]></title>
-      <url>/blog/2014/04/29/useage-of-mysqldump/</url>
-      <content type="html"><![CDATA[<ol>
-<li><p>导出整个数据库<br>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名  </p>
-<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc &gt; wcnc.sql
-</code></pre></li>
-<li><p>导出一个表<br>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名</p>
-<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc users&gt; wcnc_users.sql
-</code></pre></li>
-<li><p>导出一个数据库结构</p>
-<pre><code>mysqldump -u wcnc -p -d --add-drop-table smgp_apps_wcnc &gt;d:\wcnc_db.sql
-</code></pre><p>-d 没有数据 –add-drop-table 在每个create语句之前增加一个drop table </p>
-</li>
-<li><p>导入数据库<br>常用source 命令<br>进入mysql数据库控制台，<br>如mysql -u root -p </p>
-<p>mysql&gt;use 数据库<br>然后使用source命令，后面参数为脚本文件（如这里用到的.sql）</p>
-<pre><code>mysql&gt;source d:\wcnc_db.sql
-</code></pre></li>
-</ol>
-]]></content>
-      
-        <categories>
-            
-            <category> 后端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> mysql </tag>
-            
-            <tag> mysqldump </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[解析URL到对应的Object]]></title>
       <url>/blog/2014/04/29/reverse-string-to-object/</url>
       <content type="html"><![CDATA[<p>将 URL 中对象解析出来：</p>
@@ -8515,6 +8477,44 @@ console.log(root);
             <tag> JavaScript </tag>
             
             <tag> 解析 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[mysqldump的使用]]></title>
+      <url>/blog/2014/04/29/useage-of-mysqldump/</url>
+      <content type="html"><![CDATA[<ol>
+<li><p>导出整个数据库<br>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名  </p>
+<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc &gt; wcnc.sql
+</code></pre></li>
+<li><p>导出一个表<br>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名</p>
+<pre><code>mysqldump -u wcnc -p smgp_apps_wcnc users&gt; wcnc_users.sql
+</code></pre></li>
+<li><p>导出一个数据库结构</p>
+<pre><code>mysqldump -u wcnc -p -d --add-drop-table smgp_apps_wcnc &gt;d:\wcnc_db.sql
+</code></pre><p>-d 没有数据 –add-drop-table 在每个create语句之前增加一个drop table </p>
+</li>
+<li><p>导入数据库<br>常用source 命令<br>进入mysql数据库控制台，<br>如mysql -u root -p </p>
+<p>mysql&gt;use 数据库<br>然后使用source命令，后面参数为脚本文件（如这里用到的.sql）</p>
+<pre><code>mysql&gt;source d:\wcnc_db.sql
+</code></pre></li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 后端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mysql </tag>
+            
+            <tag> mysqldump </tag>
             
         </tags>
         
@@ -8687,20 +8687,26 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
     </entry>
     
     <entry>
-      <title><![CDATA[IOS边缘回弹的禁止]]></title>
-      <url>/blog/2014/04/27/IOS-doc-scroll/</url>
-      <content type="html"><![CDATA[<p>IOS的浏览器里头，文档滚到顶部或者底部，还是可以继续滚动，对于全屏的应用来说，这个多余的体验是十分不好的。如下：</p>
-<p><img src="//cloud.githubusercontent.com/assets/2698003/2810913/958be2f6-cdf2-11e3-8266-4adf0ab7da7d.jpg"></p>
-<p>比较靠谱的方式是：</p>
-<pre><code>document.addEventListener(&quot;touchmove&quot;, function(evt){
-  evt.preventDefault();
-}, true);
-</code></pre><p>禁用 touchmove，方法很靠谱，不过还是谨慎点用。呵呵。</p>
+      <title><![CDATA[jekyll安装不了？]]></title>
+      <url>/blog/2014/04/27/ruby-jekyll-install/</url>
+      <content type="html"><![CDATA[<p>1、安装Ruby</p>
+<pre><code>sudo apt-get install ruby1.9.1-dev
+</code></pre><p>2、安装Jekyll</p>
+<pre><code>sudo gem install jekyll
+</code></pre><p>3、安装rake(用来可以生成markdown文件)</p>
+<pre><code>sudo gem install rake
+</code></pre><p>注意几点：</p>
+<ul>
+<li>不是安装 ruby，而是 ruby-dev</li>
+<li>安装 jekyll 之前应该先安装 rdoc</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">sudo gem <span class="keyword">install</span> rdoc</div></pre></td></tr></table></figure>
+<ul>
+<li>关于gem的下载速度，查看<a href="/2014/04/27/gem-sources">这篇文章</a></li>
+</ul>
 ]]></content>
       
         <categories>
-            
-            <category> JavaScript </category>
             
             <category> 前端杂烩 </category>
             
@@ -8709,11 +8715,9 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
         
         <tags>
             
-            <tag> IOS </tag>
+            <tag> jekyll </tag>
             
-            <tag> touchmove </tag>
-            
-            <tag> scroll </tag>
+            <tag> ruby </tag>
             
         </tags>
         
@@ -8753,43 +8757,6 @@ hint: See the &apos;Note about fast-forwards&apos; in &apos;git push --help&apos
     </entry>
     
     <entry>
-      <title><![CDATA[jekyll安装不了？]]></title>
-      <url>/blog/2014/04/27/ruby-jekyll-install/</url>
-      <content type="html"><![CDATA[<p>1、安装Ruby</p>
-<pre><code>sudo apt-get install ruby1.9.1-dev
-</code></pre><p>2、安装Jekyll</p>
-<pre><code>sudo gem install jekyll
-</code></pre><p>3、安装rake(用来可以生成markdown文件)</p>
-<pre><code>sudo gem install rake
-</code></pre><p>注意几点：</p>
-<ul>
-<li>不是安装 ruby，而是 ruby-dev</li>
-<li>安装 jekyll 之前应该先安装 rdoc</li>
-</ul>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">sudo gem <span class="keyword">install</span> rdoc</div></pre></td></tr></table></figure>
-<ul>
-<li>关于gem的下载速度，查看<a href="/2014/04/27/gem-sources">这篇文章</a></li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> jekyll </tag>
-            
-            <tag> ruby </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Ubuntu下Rhythmbox mp3音乐乱码]]></title>
       <url>/blog/2014/04/27/filename-messy-code/</url>
       <content type="html"><![CDATA[<p>linux系统遇到点乱码问题是很正常的，你碰到的问题，别人一般会已经碰到过，甚至已经有了很好的解决方案。</p>
@@ -8823,13 +8790,15 @@ export GST_ID3V2_TAG_ENCODING=GBK:UTF-8:GB18030
     </entry>
     
     <entry>
-      <title><![CDATA[巧妙交换值]]></title>
-      <url>/blog/2014/04/26/replace-a-and-b/</url>
-      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
-a = [b, b = a][0];
-a // 2
-b // 1
-</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+      <title><![CDATA[IOS边缘回弹的禁止]]></title>
+      <url>/blog/2014/04/27/IOS-doc-scroll/</url>
+      <content type="html"><![CDATA[<p>IOS的浏览器里头，文档滚到顶部或者底部，还是可以继续滚动，对于全屏的应用来说，这个多余的体验是十分不好的。如下：</p>
+<p><img src="//cloud.githubusercontent.com/assets/2698003/2810913/958be2f6-cdf2-11e3-8266-4adf0ab7da7d.jpg"></p>
+<p>比较靠谱的方式是：</p>
+<pre><code>document.addEventListener(&quot;touchmove&quot;, function(evt){
+  evt.preventDefault();
+}, true);
+</code></pre><p>禁用 touchmove，方法很靠谱，不过还是谨慎点用。呵呵。</p>
 ]]></content>
       
         <categories>
@@ -8843,9 +8812,11 @@ b // 1
         
         <tags>
             
-            <tag> hack </tag>
+            <tag> IOS </tag>
             
-            <tag> tips </tag>
+            <tag> touchmove </tag>
+            
+            <tag> scroll </tag>
             
         </tags>
         
@@ -8885,6 +8856,66 @@ b // 1
     </entry>
     
     <entry>
+      <title><![CDATA[jekyll中gsub未定义的错误]]></title>
+      <url>/blog/2014/04/26/gsup-error-in-atom-file/</url>
+      <content type="html"><![CDATA[<p>今天被 jekyll 编译时的一个问题搞疯了。</p>
+<blockquote>
+<p>Liquid Exception: undefined method `gsub’ for nil:NilClass in atom.xml</p>
+</blockquote>
+<p>上面这个错误，开始以为时jekyll的版本问题，后来又以为时 UIT8 编码错误，再继续折腾，看了很多博客还是没有处理好。</p>
+<p>在 <code>atom.xml</code> 中我写了一句 ，以前一直是这样的啊，没报错。不知道 github pages 的后台 jekyll 编译器是不是做了版本或者其他方面的修改，定位到这个位置之后，把内容改成了</p>
+<pre><code>\{\{ post.excerpt }}
+\{\{ post.content }} # 改成这个也可以，只是内容太多，我不喜欢
+</code></pre><p>差不多整了我两个小时，这么点小错误，妹的！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> error </tag>
+            
+            <tag> jekyll </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[巧妙交换值]]></title>
+      <url>/blog/2014/04/26/replace-a-and-b/</url>
+      <content type="html"><![CDATA[<pre><code>a = 1, b = 2;
+a = [b, b = a][0];
+a // 2
+b // 1
+</code></pre><p>很巧妙的替换了 a 和 b 的值。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+            <category> 前端杂烩 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hack </tag>
+            
+            <tag> tips </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[clip的安装和使用]]></title>
       <url>/blog/2014/04/26/clip-in-sys/</url>
       <content type="html"><![CDATA[<p>很多情况下我们需要复制整个文件的内容，然后粘贴到其他地方，像我这种命令行控，文件操作基本都是命令行处理的，平时会用 vim 打开文件，然后</p>
@@ -8915,37 +8946,6 @@ xclip -sel clip &lt; FILE
             <tag> tips </tag>
             
             <tag> clip </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[jekyll中gsub未定义的错误]]></title>
-      <url>/blog/2014/04/26/gsup-error-in-atom-file/</url>
-      <content type="html"><![CDATA[<p>今天被 jekyll 编译时的一个问题搞疯了。</p>
-<blockquote>
-<p>Liquid Exception: undefined method `gsub’ for nil:NilClass in atom.xml</p>
-</blockquote>
-<p>上面这个错误，开始以为时jekyll的版本问题，后来又以为时 UIT8 编码错误，再继续折腾，看了很多博客还是没有处理好。</p>
-<p>在 <code>atom.xml</code> 中我写了一句 ，以前一直是这样的啊，没报错。不知道 github pages 的后台 jekyll 编译器是不是做了版本或者其他方面的修改，定位到这个位置之后，把内容改成了</p>
-<pre><code>\{\{ post.excerpt }}
-\{\{ post.content }} # 改成这个也可以，只是内容太多，我不喜欢
-</code></pre><p>差不多整了我两个小时，这么点小错误，妹的！</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 前端杂烩 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> error </tag>
-            
-            <tag> jekyll </tag>
             
         </tags>
         
@@ -9221,6 +9221,30 @@ npm config set registry=http://registry.npmjs.org
     </entry>
     
     <entry>
+      <title><![CDATA[老程序员Vs新程序员]]></title>
+      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
+</blockquote>
+<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 观点和感想 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> talk </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[webview中的点击高亮问题]]></title>
       <url>/blog/2014/03/31/tap-highlight-in-webview/</url>
       <content type="html"><![CDATA[<p>这两天在做一个淘金币的小游戏，测试页面的时候还挺正常的，放到webview（嵌入诸如微信、微博等客户端的网页容器）中就出问题了。</p>
@@ -9249,30 +9273,6 @@ npm config set registry=http://registry.npmjs.org
             <tag> webview </tag>
             
             <tag> highlight </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[老程序员Vs新程序员]]></title>
-      <url>/blog/2014/03/31/old-programmer-vs-newer/</url>
-      <content type="html"><![CDATA[<blockquote>
-<p><strong>经验越足、知道的越多编程越慢</strong><br><br>这就是为何不能让老程序员冲锋在一线开发岗位的原因。因为编程经验越足、知道的越多，他做项目时就会思前顾后。往往一个小功能给菜鸟开发需要一周，老鸟开发可能得两周，结果用户一个需求变更直接干趴老鸟程序员。</p>
-</blockquote>
-<p>当你成为老程序员时是否也要开始重新审视下自己？！</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 观点和感想 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> talk </tag>
             
         </tags>
         
