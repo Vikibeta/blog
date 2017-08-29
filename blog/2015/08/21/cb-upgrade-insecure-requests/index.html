@@ -82,7 +82,7 @@
 <figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line">header(<span class="string">"Content-Security-Policy: upgrade-insecure-requests"</span>)<span class="comment">;</span></div></pre></td></tr></table></figure>
 <p>我们的页面是 https 的，而这个页面中包含了大量的 http 资源（图片、iframe等），页面一旦发现存在上述响应头，会在加载 http 资源时自动替换成 https 请求。可以查看 google 提供的一个 <a href="//googlechrome.github.io/samples/csp-upgrade-insecure-requests/index.html">demo</a>：</p><br><p><img src="http://images0.cnblogs.com/blog2015/387325/201508/211108018005511.png" alt=""></p><br><p>不过让人不解的是，这个资源发出了两次请求，猜测是浏览器实现的 bug：</p><br><p><img src="http://images0.cnblogs.com/blog2015/387325/201508/211108089252988.png" alt=""></p><br><p>当然，如果我们不方便在服务器/Nginx 上操作，也可以在页面中加入 <code>meta</code> 头：</p>
 
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span>=<span class="string">"upgrade-insecure-requests"</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">&lt;meta <span class="attribute">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attribute">content</span>=<span class="string">"upgrade-insecure-requests"</span>&gt;</div></pre></td></tr></table></figure>
 <p></p><p>目前支持这个设置的还只有 chrome 43.0，不过我相信，CSP 将成为未来 web 前端安全大力关注和使用的内容。而 <code>upgrade-insecure-requests</code> 草案也会很快进入 RFC 模式。</p><p></p>
 <p></p><p>从 W3C 工作组给出的 <a href="http://www.w3.org/TR/upgrade-insecure-requests/#examples" target="_blank" rel="external">example</a>，可以看出，这个设置不会对外域的 a 链接做处理，所以可以放心使用。</p><p></p>
 <p></p><h3 id="_1"><a class="headeranchor-link" name="user-content-_1" href="#_1"></a>相关阅读</h3><p></p>
@@ -338,7 +338,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlsh00kykjboy98lchu6" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8et00k1nzboswwp4t45" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

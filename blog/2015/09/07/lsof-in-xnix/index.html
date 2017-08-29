@@ -91,7 +91,7 @@
 <li><code>-i</code> 端口号</li>
 </ul>
 <p>还有几个就不列举了，对一般用户来说并不常用。一次命令的执行，程序会吐出这些信息：</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">➜  blogsys ✗ lsof -i :<span class="number">4001</span></div><div class="line">COMMAND     PID      <span class="keyword">USER</span>   <span class="title">FD</span>   <span class="keyword">TYPE</span> <span class="keyword">NODE</span> <span class="title">NAME</span></div><div class="line">Google    <span class="number">57881</span> barretlee  <span class="number">113</span>u  IPv4 TCP localhost:<span class="number">52445</span>-&gt;localhost:newoak (ESTABLISHED)</div><div class="line"><span class="keyword">node</span>      <span class="title">68004</span> barretlee   <span class="number">11</span>u  IPv6 TCP *:newoak (LISTEN)</div><div class="line"><span class="keyword">node</span>      <span class="title">68004</span> barretlee   <span class="number">18</span>u  IPv6 TCP localhost:newoak-&gt;localhost:<span class="number">52445</span> (ESTABLISHED)</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">➜  blogsys ✗ lsof -i :4001</div><div class="line">COMMAND     PID     <span class="built_in"> USER </span>  FD  <span class="built_in"> TYPE </span>NODE NAME</div><div class="line">Google    57881 barretlee  113u  IPv4 TCP localhost:52445-&gt;localhost:newoak (ESTABLISHED)</div><div class="line">node      68004 barretlee   11u <span class="built_in"> IPv6 </span>TCP *:newoak (LISTEN)</div><div class="line">node      68004 barretlee   18u <span class="built_in"> IPv6 </span>TCP localhost:newoak-&gt;localhost:52445 (ESTABLISHED)</div></pre></td></tr></table></figure>
 <p>中间还有一个 DEVICE 和 SIZE，被我删掉了。从上面可以看到包含如下信息：</p>
 <ul>
 <li>COMMAND 对应我们上面提到的 -c</li>
@@ -116,7 +116,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>639</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>722</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -366,7 +366,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlsf00kukjboc5965x7m" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8f600kjnzbonur71zqg" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

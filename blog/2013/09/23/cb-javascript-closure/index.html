@@ -89,7 +89,7 @@
 <figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</div><div class="line">    alert(x);</div><div class="line">&#125;</div><div class="line"></div><div class="line">~<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo(); <span class="comment">//1</span></div><div class="line">&#125;();</div></pre></td></tr></table></figure>
 <p>　　你可能又不解了，这里怎么会弹出1呢？<span>先说明下，下面三种写法效果是等价的（但解析方式并不一样，A、C是一类，B是另一类，这里就不多说了）：</span></p>
 
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">~<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;(); <span class="comment">//A</span></div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;()); <span class="comment">//B</span></div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;)(); <span class="comment">//C</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><div class="line">~<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;(); <span class="comment">//A</span></div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;()); <span class="comment">//B</span></div><div class="line"></div><div class="line">(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line"></div><div class="line">    foo();</div><div class="line">&#125;)(); <span class="comment">//C</span></div></pre></td></tr></table></figure>
 <p></p><h3>闭包的内存分配方式</h3><p></p>
 <p>　　回归正题，上面为什么会弹出1，这个闭包的情况和上面所述的闭包有些不太相同，上面的闭包是因为作用域中的东西没有被销毁，并与上下文存在暧昧关系，而这里并不存在销毁什么的问题，但是它依旧是一个闭包。在foo中，x是一个自由变量，当foo这个闭包产生的时候，foo的上下文会被保存，而foo处于Activation状态的时候，它会先从他所处的Activation Object（foo内部声明的变量、函数等非自由变量）中查找需要的对象，如果没有找到，便会从它开始保存的上下文中查找对象，如果还没找到，才会跑到他的上一层作用域链中取那个值为2的x。</p><br><p>　　再回到之前说的那个问题，闭包的内存分配方式。很明显，如果闭包的内存分配是利用栈的结构实现的，那进入foo运行状态的时候，应该会push一个\全局\的x，也就是向上找到那个var x = 2，接着alert(2)；但事实并非如此，上层作用域的闭包数据是动态分配的内存，也就是保存在堆里，解析器会记录这个闭包数据被引用的次数，当引用次数为0的时候，垃圾回收机制（GC）会自动处理这些垃圾。</p>
 
@@ -114,7 +114,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>1354</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>1437</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -364,7 +364,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlk1007bkjbo1ddqprs7" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt85s007mnzborzlhvdvh" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

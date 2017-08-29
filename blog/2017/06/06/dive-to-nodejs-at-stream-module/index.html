@@ -19,7 +19,7 @@
   <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
   <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
   <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
-  
+  <link rel="prev" href="http://www.barretlee.com/blog/2017/06/16/bittorrent-dht-protocal/" title="BitTorrent DHT 协议简述" />
   <link rel="next" href="http://www.barretlee.com/blog/2017/06/04/admin-platform-manage-hexo-blog/" title="通过 admin 后台管理 hexo 博客" />
   <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
   <link rel="stylesheet" href="/public/css/style.css?v=20170604">
@@ -126,7 +126,7 @@
 <p>我们构造一个 Writable Stream，在写入到资源池的时候，我们稍作处理，让它效率低一点：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Writable = <span class="built_in">require</span>(<span class="string">'stream'</span>).Writable;</div><div class="line"><span class="keyword">const</span> writer = <span class="keyword">new</span> Writable(&#123;</div><div class="line">  write(chunk, encoding, callback) &#123;</div><div class="line">    <span class="comment">// 比 process.nextTick() 稍慢</span></div><div class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">      callback &amp;&amp; callback();</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">writeOneMillionTimes(writer, <span class="string">'simple'</span>, <span class="string">'utf8'</span>, () =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'end'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>最后执行的结果是：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">drain 7268</div><div class="line">drain 4536</div><div class="line">drain 1804</div><div class="line">end</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line">drain 7268</div><div class="line">drain 4536</div><div class="line">drain 1804</div><div class="line">end</div></pre></td></tr></table></figure>
 <p>说明程序遇到了三次「背压」，如果我们没有在上面绑定 <code>writer.once(&#39;drain&#39;)</code>，那么最后的结果就是 Stream 将第一次获取的数据消耗完变结束了程序。</p>
 <h3 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h3><p>了解了 Readable 和 Writable，pipe 这个常用的函数应该就很好理解了，</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line">readable.pipe(writable);</div></pre></td></tr></table></figure>
@@ -148,7 +148,7 @@
 <p>我们可以通过 options 参数来配置它为只可读、只可写或者半工模式，一个简单的 Demo：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> Duplex = <span class="built_in">require</span>(<span class="string">'stream'</span>).Duplex</div><div class="line"></div><div class="line"><span class="keyword">const</span> duplex = Duplex();</div><div class="line"></div><div class="line"><span class="comment">// readable</span></div><div class="line"><span class="keyword">let</span> i = <span class="number">2</span>;</div><div class="line">duplex._read = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.push(i-- ? <span class="string">'read '</span> + i : <span class="literal">null</span>);</div><div class="line">&#125;;</div><div class="line">duplex.on(<span class="string">'data'</span>, data =&gt; <span class="built_in">console</span>.log(data.toString()));</div><div class="line"></div><div class="line"><span class="comment">// writable</span></div><div class="line">duplex._write = <span class="function"><span class="keyword">function</span> (<span class="params">chunk, encoding, callback</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(chunk.toString());</div><div class="line">  callback();</div><div class="line">&#125;;</div><div class="line">duplex.write(<span class="string">'write'</span>);</div></pre></td></tr></table></figure>
 <p>输出的结果为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">write</div><div class="line">read 1</div><div class="line">read 0</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line">write</div><div class="line">read 1</div><div class="line">read 0</div></pre></td></tr></table></figure>
 <p>可以看出，两个管道是相互之间不干扰的。</p>
 <h3 id="Transform-Stream"><a href="#Transform-Stream" class="headerlink" title="Transform Stream"></a>Transform Stream</h3><p>Transform Stream 集成了 Duplex Stream，它同样具备 Readable 和 Writable 的能力，只不过它的输入和输出是存在相互关联的，中间做了一次转换处理。常见的处理有 Gzip 压缩、解压等。</p>
 <p><img src="/blogimgs/node-stream-transform.png" alt="node-stream-transform"></p>
@@ -197,6 +197,14 @@
   <div class="post-relative">
 <div class="page-relative">
   
+    <a href="/blog/2017/06/16/bittorrent-dht-protocal/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>BitTorrent DHT 协议简述</b>
+      
+    </a>
+  
   
     <a href="/blog/2017/06/04/admin-platform-manage-hexo-blog/" class="post-next">
       <span class="aria-readonly">下一篇文章</span>
@@ -208,6 +216,13 @@
 
 
 <div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2017/06/16/bittorrent-dht-protocal/" class="prev" title="BitTorrent DHT 协议简述">
+    <i class="icon">&#xe600;</i>
+    
+    <b>BitTorrent DHT 协议简述</b>
+    
+  </a>
   
   
   <a href="/blog/2017/06/04/admin-platform-manage-hexo-blog/" class="next" title="通过 admin 后台管理 hexo 博客">
@@ -393,7 +408,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlyx00tkkjboy18lrohp" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8mu00tznzbo5cs4xmus" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

@@ -79,7 +79,7 @@
 
 <p>相信每一个 javascript 学习者，都会去了解 JS 的各种基本数据类型，数组就是数据的组合，这是一个很基本也十分简单的概念，他的内容没多少，学好它也不是件难事情。但是本文着重要介绍的并不是我们往常看到的 Array，而是 ArrayBuffer。</p><br><p>我写的很多东西都是因为要完成某些特定的功能而刻意总结的，可以算是备忘，本文也是如此！前段时间一直在研究 Web Audio API 以及语音通信相关的知识，内容侧重于音频流在 AudioContext 各个节点之间的流动情况，而现在要摸清楚音频到流底是个什么样的数据格式，所以对 ArrayBuffer 的研究就显得格外重要了。</p><br><p>本文地址：<a href="http://www.cnblogs.com/hustskyking/p/javascript-array.html" target="_blank" rel="external">http://www.cnblogs.com/hustskyking/p/javascript-array.html</a>，转载请注明源地址。</p><br><h3>一、Array 在内存中的堆栈模型</h3><br><h4>1. Array 的获取</h4><br><p>Javascript 中如何产生 Array：</p>
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><div class="line">[<span class="name">element0</span>, element1, ..., elementN]</div><div class="line">new Array(<span class="name">element0</span>, element1, ..., elementN)</div><div class="line">new Array(<span class="name">arrayLength</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">[element0, element1, ..., elementN]</div><div class="line"><span class="keyword">new</span> <span class="keyword">Array</span>(element0, element1, ..., elementN)</div><div class="line"><span class="keyword">new</span> <span class="keyword">Array</span>(arrayLength)</div></pre></td></tr></table></figure>
 <p>直接定义，或者通过构造函数创建一个 Array，当然也可以使用其他的手段：</p>
 
 <figure class="highlight coq"><table><tr><td class="code"><pre><div class="line"><span class="string">"array"</span>.<span class="built_in">split</span>(<span class="string">""</span>);</div><div class="line"><span class="string">"array"</span>.<span class="keyword">match</span>(/a|<span class="type">r</span>/g);</div></pre></td></tr></table></figure>
@@ -136,7 +136,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>1193</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>1276</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -386,7 +386,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlm900apkjbog57g1v87" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt88700acnzbohkpi8ww3" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

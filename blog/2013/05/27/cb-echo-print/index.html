@@ -82,7 +82,7 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line">    <span class="comment">#echo print 函数效率测试对比</span></div><div class="line">    $old = microtime(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; <span class="number">10000000</span>; $i++)&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">"1"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $new = microtime(<span class="keyword">true</span>);</div><div class="line">    $one = $old - $new;</div><div class="line">    <span class="keyword">echo</span> $one . <span class="string">"\n"</span>; <span class="comment">#echo 函数测试结果</span></div><div class="line"></div><div class="line">    $old = microtime(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; <span class="number">10000000</span>; $i++)&#123;</div><div class="line">        <span class="keyword">print</span> <span class="string">"1"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $new = microtime(<span class="keyword">true</span>);</div><div class="line">    $two = $old - $new;</div><div class="line">    <span class="keyword">echo</span> $two . <span class="string">"\n"</span>; <span class="comment">#print 函数测试结果</span></div><div class="line"></div><div class="line">    <span class="keyword">echo</span> ($two - $one) / $two; <span class="comment">#效率比较</span></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
 <p>测试结果：</p>
 
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">$one</span>:  0.35927200317383</span></div><div class="line"><span class="meta"><span class="meta-keyword">$two</span>:  0.42829704284668</span></div><div class="line">(<span class="symbol">$</span>two - <span class="symbol">$</span>one) / <span class="symbol">$</span>two:  <span class="number">0.16116160694007</span></div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">one:  0.35927200317383</span></div><div class="line"><span class="meta">$</span><span class="bash">two:  0.42829704284668</span></div><div class="line"><span class="meta">($</span><span class="bash">two - <span class="variable">$one</span>) / <span class="variable">$two</span>:  0.16116160694007</span></div></pre></td></tr></table></figure>
 <p>多次测试，发现echo比print效率高15%左右。</p>
 
 
@@ -95,7 +95,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>1472</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>1556</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -335,7 +335,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlid004lkjbo14kbpy5h" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt835004onzboxztwvad5" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

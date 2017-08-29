@@ -85,7 +85,7 @@
 <figure class="highlight http"><table><tr><td class="code"><pre><div class="line"><span class="keyword">GET</span> <span class="string">/chat</span> HTTP/1.1</div><div class="line"><span class="attribute">Host</span>: server.example.com</div><div class="line"><span class="attribute">Upgrade</span>: websocket</div><div class="line"><span class="attribute">Connection</span>: Upgrade</div><div class="line"><span class="attribute">Sec-WebSocket-Key</span>: dGhlIHNhbXBsZSBub25jZQ==</div><div class="line"><span class="attribute">Origin</span>: http://example.com</div><div class="line"><span class="attribute">Sec-WebSocket-Protocol</span>: chat, superchat</div><div class="line"><span class="attribute">Sec-WebSocket-Version</span>: 13</div></pre></td></tr></table></figure>
 <p>客户端发了一串 Base64 加密的密钥过去，也就是上面你看到的 Sec-WebSocket-Key。 Server 看到 Client 打招呼之后，悄悄地告诉 Client 他已经知道了，顺便也打个招呼。</p>
 
-<figure class="highlight http"><table><tr><td class="code"><pre><div class="line">HTTP/1.1 <span class="number">101</span> Switching Protocols</div><div class="line"><span class="attribute">Upgrade</span>: websocket</div><div class="line"><span class="attribute">Connection</span>: Upgrade</div><div class="line"><span class="attribute">Sec-WebSocket-Accept</span>: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=</div><div class="line"><span class="attribute">Sec-WebSocket-Protocol</span>: chat</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">HTTP/1.1 101 Switching Protocols</div><div class="line">Upgrade: websocket</div><div class="line">Connection:<span class="built_in"> Upgrade</span></div><div class="line">Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=</div><div class="line">Sec-WebSocket-Protocol: chat</div></pre></td></tr></table></figure>
 <p>Server 返回了 Sec-WebSocket-Accept 这个应答，这个应答内容是通过一定的方式生成的。生成算法是：</p>
 
 <figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">mask</span>  = <span class="string">"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"</span>;  // 这是算法中要用到的固定字符串</div><div class="line"><span class="attr">accept</span> = base64( sha1( key + mask ) );</div></pre></td></tr></table></figure>
@@ -136,7 +136,7 @@
 <figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">o</span><span class="selector-class">.write</span>(<span class="selector-tag">encodeDataFrame</span>(&#123;</div><div class="line">    <span class="attribute">FIN</span>:<span class="number">1</span>,</div><div class="line">    Opcode:<span class="number">8</span>,</div><div class="line">    PayloadData:buf</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
 <p>客户端就会相应 onclose 函数，这样的交互还算是有规有矩，不容易出错。</p><br><h3>二、注意事项</h3><br><h4>1. WebSocket URIs</h4><br><p>很多人可能只知道&nbsp;<code>ws://text.com:8888</code>，但事实上 websocket 协议地址是可以加 path 和 query 的。</p>
 
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">ws-URI</span> = <span class="string">"ws:"</span> <span class="string">"//"</span> host [ <span class="string">":"</span> port ] path [ <span class="string">"?"</span> query ]</div><div class="line"><span class="attr">wss-URI</span> = <span class="string">"wss:"</span> <span class="string">"//"</span> host [ <span class="string">":"</span> port ] path [ <span class="string">"?"</span> query ]</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">ws-URI = <span class="string">"ws:"</span> <span class="string">"//"</span> host [ <span class="string">":"</span><span class="built_in"> port </span>] path [ <span class="string">"?"</span> query ]</div><div class="line">wss-URI = <span class="string">"wss:"</span> <span class="string">"//"</span> host [ <span class="string">":"</span><span class="built_in"> port </span>] path [ <span class="string">"?"</span> query ]</div></pre></td></tr></table></figure>
 <p>如果使用的是 wss 协议，那么 URI 将会以安全方式连接。 这里的 wss 大小写不敏感。</p><br><h4>2. 协议中”多余”的部分（吐槽）</h4><br><p>握手请求中包含Sec-WebSocket-Key字段，明眼人一下就能看出来是websocket连接，而且这个字段的加密方式在服务器也是固定的，如果别人想黑你，不会太难。</p><br><p>再就是那个 MaskingKey 掩码，既然强制加密了（Mask为1表示加密，加密方式就是 MaskingKey 与 PayLoadData 进行异或处理），还有必要让开发者处理这个东西么？直接封装到内部不就行了？</p><br><h4 id="menuIndex9">3. 与 TCP 和 HTTP 之间的关系</h4><br><p>WebSocket协议是一个基于TCP的协议，就是握手链接的时候跟HTTP相关（发了一个HTTP请求），这个请求被Server切换到（Upgrade）websocket协议了。websocket把 80 端口作为默认websocket连接端口，而websocket的运行使用的是443端口。</p><br><h3>三、参考资料</h3><br><ul><br><li><a href="http://tools.ietf.org/html/rfc6455" target="_blank">http://tools.ietf.org/html/rfc6455</a> web standard - The WebSocket Protocol</li><br><li><a href="http://www.w3.org/TR/websockets/" target="_blank">http://www.w3.org/TR/websockets/</a> W3.ORG - WebSockets</li><br></ul><br><h3>四、特别感谢</h3><br><p>再次感谢 <a href="http://www.web-tinker.com/" target="_blank">次碳酸钴</a> 跟我交流了几个小时 : )，本文部分 node 代码参考自他的博客。</p>
 
 
@@ -149,7 +149,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>1266</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>1349</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -399,7 +399,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlku008mkjboifvjdqs7" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt874008tnzbog9bt2ev9" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

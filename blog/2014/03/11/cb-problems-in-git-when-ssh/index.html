@@ -98,7 +98,7 @@
 <figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> .ssh</div></pre></td></tr></table></figure>
 <p>之所以要用命令行是因为有时候浏览器不让你在文件夹名第一位放点号。</p><br><p>当然也有可能是因为你没有把创建的两个密钥放到 .ssh/ 目录下，而是直接扔在根目录下。</p><br><h4>2. Host key verification failed</h4><br><p>“Host key verification failed.” 相信你也撞到了这个问题，主机的密钥验证失败，主机就是你的机器，密钥验证失败有两个原因，一个是 RSA 做了更改，另一个原因是在 known_hosts 中存在一个缓存的记录，如果确认了 RSA 没有错误，那你就应该去 known_hosts 中删掉对应的那个记录（这个记录可以当做是缓存，是对验证做了一次缓存，缓存的作用是减少验证次数，不需要每次都验证，读取缓存就行了）。</p><br><p>当然，你也可以直接删除这个 known_hosts 文件。</p><br><h4>3. Permission denied (publickey)</h4><br><p>“Permission denied (publickey).” 这个问题其实和上面的 2 差不多，当你出现过 “Host key verification failed.”，然后继续执行程序，如执行 <code>ssh -T git@xxx.com</code> 的时候就会出现这个问题提醒。说到底就是没有找到你的 rsa 私有密钥，或者 rsa 密钥匹配出错。</p><br><h3>三、windows 下让人纠结的问题</h3><br><h4>1. 找不到根目录</h4><br><p>生成密钥默认放在 “~/.ssh/“ 下，但是在 cmd 下操作会找不到 “~/“ 这个根目录，因为这是 windows 不是 linux/unix，有些童鞋可能装了 cygwin，在这个环境下操作可以 “cd ~”，git bash 下当然也是可以的。</p><br><p>如果不知道有这个问题的存在，你会碰到上述问题一，程序直接让你输入密码，但不过你输入什么密码都是错误的。输入三次之后状态为 <code>Permission denied</code>，这里的原因就是没找到 <code>~/.ssh/id_rsa</code> ，cmd 下她根本就不认识 “~/“ 这个目录。</p><br><h4>2. 多个服务端的维护</h4><br><p>很常见的问题。上面我们说到了，程序会默认寻找 <code>~/.ssh/id_rsa</code> 这个文件，同一目录下显然不能有两个重名文件，也就是说当我们去认证 github 和另外一个 git 服务器的时候，我们需要把两个 rsa 私有密钥的名字换来换去，想用谁就把谁改成 id_rsa。特别麻烦，那肿么办？</p><br><p>之前在网上看到说是对 ssh_config 进行配置，配置内容是：</p>
 
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">Host github<span class="selector-class">.com</span></div><div class="line">    User boy-<span class="selector-tag">a</span></div><div class="line">    IdentifyFile ~/.ssh/github</div><div class="line">Host xxx<span class="selector-class">.com</span></div><div class="line">    User boy-<span class="selector-tag">b</span></div><div class="line">    IdentifyFile ~/.ssh/xxx</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">Host github.com</div><div class="line">   <span class="built_in"> User </span>boy-a</div><div class="line">    IdentifyFile ~/.ssh/github</div><div class="line">Host xxx.com</div><div class="line">   <span class="built_in"> User </span>boy-b</div><div class="line">    IdentifyFile ~/.ssh/xxx</div></pre></td></tr></table></figure>
 <p>这里的 “~/.ssh/github” 和 “~/.ssh/xxx” 都是 rsa 文件，文件的命令可以直接改，也可以在开始生成的时候设定，命名对内容没有任何影响。项目的几行代码应该也是十分清晰的，针对不同的 git 服务器，使用不用的 IdentifyFile。</p><br><p>但是你会发现，你的设置毫无用处，因为你把文件名搞错了！在 linux/unix 下可能是使用 ssh_config 这个文件名，但是在 windows 下是使用 config 作为文件名放在 ~/.ssh/ 目录中！</p><br><h3>四、小结</h3><br><p>这东西我纠结了一个下午，花了将近三个多小时才解决问题，真心快吐血了！说到底就是一个 config 的配置问题，遇到这种问题最快捷的方式并不是在网上疯狂的搜索答案，而是静下心来看看 rsa | git | ssh 的基础知识，了解每个参数及其用途，对症下药！</p>
 
 
@@ -111,7 +111,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>1184</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>1268</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -361,7 +361,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmllz00a9kjbowyf5ljt7" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt88h00aknzbo1ndtzjs6" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

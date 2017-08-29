@@ -83,7 +83,7 @@
 <li>Demo地址：<a href="http://barretlee.github.io/lazyload/demo/index.html" target="_blank" rel="external">http://barretlee.github.io/lazyload/demo/index.html</a></li>
 </ul>
 <p>核心代码：</p>
-<figure class="highlight qml"><table><tr><td class="code"><pre><div class="line">Lazyload.prototype._detectElementIfInScreen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(!<span class="keyword">this</span>.elements.length) <span class="keyword">return</span>;</div><div class="line">  <span class="keyword">for</span> (<span class="built_in">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>.elements.length; i &lt; len; i++) &#123;</div><div class="line">    <span class="built_in">var</span> ele = <span class="keyword">this</span>.elements[i];</div><div class="line">    <span class="built_in">var</span> <span class="built_in">rect</span> = ele.getBoundingClientRect();</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">rect</span>.top &gt;= Lazyload.DISTANCE &amp;&amp; <span class="built_in">rect</span>.left &gt;= Lazyload.DISTANCE</div><div class="line">      &amp;&amp; <span class="built_in">rect</span>.top &lt;= (<span class="built_in">window</span>.innerHeight || <span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">      &amp;&amp; <span class="built_in">rect</span>.left &lt;= (<span class="built_in">window</span>.innerWidth || <span class="built_in">document</span>.documentElement.clientWidth)) &#123;</div><div class="line">      <span class="keyword">this</span>.loadItem(ele, i);</div><div class="line">      <span class="keyword">this</span>.elements.splice(i, <span class="number">1</span>);</div><div class="line">      i--; len--;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight qml"><table><tr><td class="code"><pre><div class="line">Lazyload.prototype._detectElementIfInScreen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span>(!<span class="keyword">this</span>.elements.length) <span class="keyword">return</span>;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>.elements.length; i &lt; len; i++) &#123;</div><div class="line">    <span class="keyword">var</span> ele = <span class="keyword">this</span>.elements[i];</div><div class="line">    <span class="keyword">var</span> <span class="built_in">rect</span> = ele.getBoundingClientRect();</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">rect</span>.top &gt;= Lazyload.DISTANCE &amp;&amp; <span class="built_in">rect</span>.left &gt;= Lazyload.DISTANCE</div><div class="line">      &amp;&amp; <span class="built_in">rect</span>.top &lt;= (<span class="built_in">window</span>.innerHeight || <span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">      &amp;&amp; <span class="built_in">rect</span>.left &lt;= (<span class="built_in">window</span>.innerWidth || <span class="built_in">document</span>.documentElement.clientWidth)) &#123;</div><div class="line">      <span class="keyword">this</span>.loadItem(ele, i);</div><div class="line">      <span class="keyword">this</span>.elements.splice(i, <span class="number">1</span>);</div><div class="line">      i--; len--;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>这里主要用到了 <code>getBoundingClientRect</code> 这个函数，兼容性没话说，IE6 都兼容，他的作用是获取元素距离视窗上下左右的距离：</p>
 <p><img src="//www.barretlee.com/blogimgs/2015/11/20151101_a1f44914.jpg" alt="Chrome getBoundingClientRect"></p>
 <p>配置了两个参数：</p>
@@ -99,7 +99,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>569</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>652</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -349,7 +349,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmltp00mokjbomyhn65ak" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8go00mwnzbov21g7lm3" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

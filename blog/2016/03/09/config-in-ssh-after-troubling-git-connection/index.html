@@ -90,14 +90,14 @@
 </ul>
 <p>注意：一般来说，我们给 <code>~/.ssh</code> 文件夹赋予的权限为 <code>0700</code>。</p>
 <p>配置格式比较简单，以下配置等同于上面我们的登录命令设置：</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">Host test</div><div class="line">  HostName test.server.com</div><div class="line">  <span class="keyword">User</span> <span class="title">YOURNAME</span></div><div class="line">  Port <span class="number">8892</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">Host test</div><div class="line">  HostName test.server.com</div><div class="line"> <span class="built_in"> User </span>YOURNAME</div><div class="line"> <span class="built_in"> Port </span>8892</div></pre></td></tr></table></figure>
 <p>可以是 <code>param value</code> 也可以为 <code>param=value</code>，其中 param 对大小写不敏感，value 对大小写敏感。</p>
 <p>使用 <code>ssh test</code> 即可完成登录，当我们有稍微麻烦点配置的时候，如数据库的 3306 端口对外不开放，可以开放另一个接口，然后内部跳转到 3306，使用命令行的写法是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssh <span class="_">-f</span> -N -L 8999:127.0.0.1:3306 <span class="built_in">test</span>@database.server.com</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssh -f -N -L 8999:127.0.0.1:3306 <span class="built_in">test</span>@database.server.com</div></pre></td></tr></table></figure>
 <p>大串的命令行，过多的参数，实在是有点不好记。而在 config 文件中的配置就一目了然：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">Host</span> <span class="selector-tag">test</span></div><div class="line">  <span class="selector-tag">HostName</span> <span class="selector-tag">test</span><span class="selector-class">.server</span><span class="selector-class">.com</span></div><div class="line">  <span class="selector-tag">User</span> <span class="selector-tag">YOURNAME</span></div><div class="line">  <span class="selector-tag">LocalForward</span> 8999 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:3306</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">Host test</div><div class="line">  HostName test.server.com</div><div class="line"> <span class="built_in"> User </span>YOURNAME</div><div class="line">  LocalForward 8999 127.0.0.1:3306</div></pre></td></tr></table></figure>
 <p>当你有多台远程终端的时候，config 文件的优势就更加明显了：</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="comment"># serverlist </span></div><div class="line">Host list</div><div class="line">  HostName *.serverlist.com</div><div class="line">  <span class="keyword">User</span> <span class="title">YOURNAME</span></div><div class="line">  IdentityFile ~/.ssh/serverlist.com.key</div><div class="line"></div><div class="line"><span class="comment"># personal server  </span></div><div class="line">Host personal</div><div class="line">  HostName proxy1.barretlee.com proxy2.barretlee.com</div><div class="line">  <span class="keyword">User</span> <span class="title">barretlee</span></div><div class="line">  IdentityFile ~/.ssh/proxy.barretlee.com.key</div><div class="line"></div><div class="line"><span class="comment"># school</span></div><div class="line">HostName <span class="number">222.20</span>.<span class="number">74.89</span></div><div class="line">  <span class="keyword">User</span> <span class="title">school</span></div><div class="line">  LocalForward <span class="number">8999</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">3306</span></div><div class="line">  IdentityFile ~/.ssh/school.key</div><div class="line"><span class="comment"># and so on.</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="comment"># serverlist </span></div><div class="line">Host list</div><div class="line">  HostName *.serverlist.com</div><div class="line"> <span class="built_in"> User </span>YOURNAME</div><div class="line">  IdentityFile ~/.ssh/serverlist.com.key</div><div class="line"></div><div class="line"><span class="comment"># personal server  </span></div><div class="line">Host personal</div><div class="line">  HostName proxy1.barretlee.com proxy2.barretlee.com</div><div class="line"> <span class="built_in"> User </span>barretlee</div><div class="line">  IdentityFile ~/.ssh/proxy.barretlee.com.key</div><div class="line"></div><div class="line"><span class="comment"># school</span></div><div class="line">HostName 222.20.74.89</div><div class="line"> <span class="built_in"> User </span>school</div><div class="line">  LocalForward 8999 127.0.0.1:3306</div><div class="line">  IdentityFile ~/.ssh/school.key</div><div class="line"><span class="comment"># and so on.</span></div></pre></td></tr></table></figure>
 <p>这里常用的的 param 也不是很多：</p>
 <ul>
 <li><code>Host</code>，SSH 连接名</li>
@@ -139,7 +139,7 @@
 <p>如果是在已有的仓库中，其默认 origin 配置会是：<code>//git.coding.net/taobaofed/blog.git</code> 或者 <code>git@git.coding.net:taobaofed/blog.git</code>，你可以将仓库下的 <code>.git/config</code> 文件修改下：</p>
 <figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">[remote <span class="string">"origin"</span>]</div><div class="line">  url = git<span class="variable">@coding</span>-<span class="symbol">taobaofed:</span>taobaofed/blog.git</div><div class="line">  fetch = +refs/heads/*<span class="symbol">:refs/remotes/origin/*</span></div></pre></td></tr></table></figure>
 <p>防止克隆其他仓库代码也出现问题，我们可以将 <code>~/.ssh/config</code> 稍加修改：</p>
-<figure class="highlight clean"><table><tr><td class="code"><pre><div class="line">## barretlee coding ##</div><div class="line">Host git.coding.net coding-barretlee</div><div class="line">     HostName git.coding.net</div><div class="line">     User barretlee</div><div class="line">     IdentityFile ~/.ssh/coding_barretlee</div><div class="line"></div><div class="line">## taobaofed coding ##</div><div class="line">Host coding-taobaofed</div><div class="line">     HostName git.coding.net</div><div class="line">     User taobaofed</div><div class="line">     IdentityFile ~/.ssh/coding_taobaofed</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="comment">## barretlee coding ##</span></div><div class="line">Host git.coding.net coding-barretlee</div><div class="line">     HostName git.coding.net</div><div class="line">    <span class="built_in"> User </span>barretlee</div><div class="line">     IdentityFile ~/.ssh/coding_barretlee</div><div class="line"></div><div class="line"><span class="comment">## taobaofed coding ##</span></div><div class="line">Host coding-taobaofed</div><div class="line">     HostName git.coding.net</div><div class="line">    <span class="built_in"> User </span>taobaofed</div><div class="line">     IdentityFile ~/.ssh/coding_taobaofed</div></pre></td></tr></table></figure>
 <p>那么，通过正常的 clone（如<code>git clone git@git.coding.net:barretlee/blog.git</code>）就不会出现 <code>Permission Denied</code> 的提示了。</p>
 <p><strong>需要引起注意的一点：在寻找配置的时候，ssh 会优先查看 ssh-agent session 中的配置，然后才是 config 文件，如果你 ssh-add 添加过 key，建议执行如下操作：</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh-add -D <span class="comment"># 删除所有的 session</span></div></pre></td></tr></table></figure>
@@ -149,6 +149,11 @@
       </div>
     </div>
     
+<div class="old-article-warning">
+	本文在 <b>539</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
+</div>
+
     <div class="follow-wechat"><img src="/follow.jpg"></div>
 
 <div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
@@ -395,7 +400,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlux00olkjbo4i4teys9" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8ib00olnzbod0kio2pc" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

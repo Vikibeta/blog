@@ -8,8 +8,36 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Wed Jun 07 2017 10:28:31 GMT+0800 (CST)</pubDate>
+    <pubDate>Tue Aug 29 2017 21:31:20 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[三年醇]]></title>
+      <link>http://www.barretlee.com/blog/2017/08/29/memory-overflow/</link>
+      <guid>http://www.barretlee.com/blog/2017/08/29/memory-overflow/</guid>
+      <pubDate>Tue Aug 29 2017 19:59:08 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[毕业三年，事在发展，人在变化。]]>
+      
+      </description>
+      <content:encoded><![CDATA[毕业三年，事在发展，人在变化。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/08/29/memory-overflow/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[BitTorrent DHT 协议简述]]></title>
+      <link>http://www.barretlee.com/blog/2017/06/16/bittorrent-dht-protocal/</link>
+      <guid>http://www.barretlee.com/blog/2017/06/16/bittorrent-dht-protocal/</guid>
+      <pubDate>Fri Jun 16 2017 16:24:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[小胡子哥的个人网站]]>
+      
+      </description>
+      <content:encoded><![CDATA[小胡子哥的个人网站]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/06/16/bittorrent-dht-protocal/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[深入理解 Node Stream 内部机制]]></title>
@@ -401,34 +429,6 @@
       <content:encoded><![CDATA[对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/08/03/shadowsocks/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[入 linode 之前]]></title>
-      <link>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</link>
-      <guid>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</guid>
-      <pubDate>Tue Aug 02 2016 01:02:30 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
-      
-      </description>
-      <content:encoded><![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[工作五年，后面四年重复着第一年的活儿？]]></title>
-      <link>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</link>
-      <guid>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</guid>
-      <pubDate>Thu Jul 21 2016 22:29:37 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
-      
-      </description>
-      <content:encoded><![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/#comments</comments>
     </item>
     
   </channel>

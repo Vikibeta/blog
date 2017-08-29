@@ -97,24 +97,29 @@
 <h3 id="IRC-相关学习"><a href="#IRC-相关学习" class="headerlink" title="IRC 相关学习"></a>IRC 相关学习</h3><p>以前玩 Linux 的时候就接触过一些 IRC 的客户端，当时感觉找到了这个世界对程序员开放的窗口，各种技术 Channel，各种交流，很是激动（当然，现在不以为然）。</p>
 <p>Google 找了下网上的推荐，一般都是使用 Weechat 或者 irssi。两个软件的安装都比较麻烦，依赖了很多软件包，不说安装和编译时间，就依赖软件包的下载时间就有半小时。</p>
 <p>先选用的 Weechat ，安装好了之后，死活调不好中文设置，不知道这样是不是正确的：</p>
-<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">/charset <span class="keyword">decode</span> GB2312</div></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><div class="line"><span class="string">/charset</span> decode GB2312</div></pre></td></tr></table></figure>
 <p>反正我是没搞好，但是学会了 IRC 的基本使用。后面还是改用成 irssi，展示没有 weechat 友好，不过默认支持中文输入。</p>
 <p>IRC 的使用，我觉得也不用太多地去看文档，进入交互命令行之后，键入 <code>/help</code>，系统会把所有的命令都打印出来，然后你感觉应该用哪个就去继续学习就行了，比如连接到一个频道，可以键入</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">/<span class="keyword">help</span> <span class="keyword">server</span></div></pre></td></tr></table></figure>
 <p>或者 </p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">/<span class="keyword">help</span> <span class="keyword">connect</span></div></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><div class="line"><span class="string">/help</span> <span class="keyword">connect</span></div></pre></td></tr></table></figure>
 <p>这些关键词都是从 <code>/help</code> 中找到的，以 weechat 为例，给出几个设置命令以供入门。</p>
-<figure class="highlight vbscript"><table><tr><td class="code"><pre><div class="line"># 添加一个 <span class="built_in">server</span></div><div class="line">/<span class="built_in">server</span> add free node chat.freenode.net</div><div class="line"># 自动链接到 freenode</div><div class="line">/<span class="keyword">set</span> irc.<span class="built_in">server</span>.freenode.autoconnect <span class="keyword">on</span></div><div class="line"># 设置 nicks，username，realname</div><div class="line">/<span class="keyword">set</span> irc.<span class="built_in">server</span>.freenode.nicks “nickname”</div><div class="line">/<span class="keyword">set</span> irc.<span class="built_in">server</span>.freenode.username “username”</div><div class="line">/<span class="keyword">set</span> irc.<span class="built_in">server</span>.freenode.realname “realname”</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 添加一个 server</span></div><div class="line"><span class="built_in">/server </span><span class="builtin-name">add</span> free node chat.freenode.net</div><div class="line"><span class="comment"># 自动链接到 freenode</span></div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.autoconnect on</div><div class="line"><span class="comment"># 设置 nicks，username，realname</span></div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.nicks “nickname”</div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.username “username”</div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.realname “realname”</div></pre></td></tr></table></figure>
 <p>输入框中键入 <code>/connect freenode</code> 就可连接到 freenode 的服务器,输入 <code>/join #javascript</code> 就可以加入到 #javascript 群组里了。</p>
-<figure class="highlight vala"><table><tr><td class="code"><pre><div class="line"><span class="meta"># 自动认证 nickname</span></div><div class="line">/<span class="keyword">set</span> irc.server.freenode.command <span class="string">"/msg nickserv identify xxxxxx"</span></div><div class="line"><span class="meta"># 自动加入群组</span></div><div class="line">/<span class="keyword">set</span> irc.server.freenode.autojoin <span class="string">"#channel1,#channel2"</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 自动认证 nickname</span></div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.command <span class="string">"/msg nickserv identify xxxxxx"</span></div><div class="line"><span class="comment"># 自动加入群组</span></div><div class="line">/<span class="builtin-name">set</span> irc.server.freenode.autojoin <span class="string">"#channel1,#channel2"</span></div></pre></td></tr></table></figure>
 <p>对鼠标的支持：</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 启动鼠标支持</span></div><div class="line">/moune enable</div><div class="line"><span class="comment"># 打开时就支持</span></div><div class="line">/<span class="keyword">set</span> weechat.look.mouse <span class="keyword">on</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 启动鼠标支持</span></div><div class="line">/moune <span class="builtin-name">enable</span></div><div class="line"><span class="comment"># 打开时就支持</span></div><div class="line">/<span class="builtin-name">set</span> weechat.look.mouse on</div></pre></td></tr></table></figure>
 <p>更多文档，可以在 google 中检索下。</p>
 <p>有好多天没有码字了，今天学习的主题是 Mojo-Webqq 和 IRC，就先说这么多，后续会把每天学习和关注的知识点都记录下，方便自己，也方便他人。</p>
 
       </div>
     </div>
     
+<div class="old-article-warning">
+	本文在 <b>563</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
+</div>
+
     <div class="follow-wechat"><img src="/follow.jpg"></div>
 
 <div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
@@ -361,7 +366,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlua00nmkjbo1euvj7wr" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8hf00nqnzbojyj05ioo" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

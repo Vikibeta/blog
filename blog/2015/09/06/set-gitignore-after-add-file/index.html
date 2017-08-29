@@ -108,14 +108,14 @@
 <figure class="highlight asciidoc"><table><tr><td class="code"><pre><div class="line"><span class="title">.gitignore</span></div></pre></td></tr></table></figure>
 <p>你会发现，并没有起作用， .gitignore 文件依然被加到了 git 中，为什么会有这个需求呢？有些人在本地开发的时候有一些其他的文件夹名不愿意让别人看到，虽然在 gitignore 中被忽略了，但是 .gitignore 文件中依然可以看到这些文件夹名字。</p>
 <p>其实没有什么好的办法处理这个问题，.gitignore 做多人协作开发的时候可以直接根据同一份 gitignore 过滤文件，如果一定要做，可以从 add 中在 remove 掉：</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">git rm <span class="comment">--cached .gitignore</span></div></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><div class="line">git rm <span class="params">--cached</span> <span class="string">.gitignore</span></div></pre></td></tr></table></figure>
 <p>Git 操作涉及的命令巨多，但是日常开发中用到的就那么几个，把原理搞清楚，用起来得心应手。</p>
 
       </div>
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>640</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>724</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -365,7 +365,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmls600kfkjbo588pywmm" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8f300kgnzbo1h4u3isi" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

@@ -96,18 +96,18 @@
 <p><img src="//www.barretlee.com/blogimgs/2015/11/20151106_9132f343.jpg" alt="DNSPod proxy.barretlee.com"></p>
 <p>这一步完成之后，你就可以通过 DNSPod 提供的接口修改 A 记录了。具体用到了三个接口：</p>
 <p>1) <code>//dnsapi.cn/Domain.List</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -k //dnsapi.cn/Domain.List <span class="_">-d</span> <span class="string">"login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -k //dnsapi.cn/Domain.List -d <span class="string">"login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json"</span></div></pre></td></tr></table></figure>
 <p>我在后面加了一个参数 <code>format=json</code>，默认是 xml 格式。在这里可以拿到 Domain 信息，比如我就拿到了在 DNSPod 上的两个域名信息，一个是 barret.cc 的具体信息，一个是 barretlee.com 的具体信息。这里有用的是 barretlee.com 中的 id 字段，我拿到的值为 25348135。</p>
 <p>2) <code>//dnsapi.cn/Record.List</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -k //dnsapi.cn/Record.List <span class="_">-d</span> <span class="string">"login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">curl -k //dnsapi.cn/Record.List -d <span class="string">"login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135"</span></div></pre></td></tr></table></figure>
 <p>通过这个接口，可以拿到 barretlee.com 所有子域名的信息，<code>proxy.barretlee.com</code> 对应的 record 的 id 字段值为 126112527。</p>
 <p>3) <code>//dnsapi.cn/Record.Ddns</code>,<code>//dnsapi.cn/Record.Modify</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment">## 查询 proxy.barretlee.com 域名对应的 A 记录</span></div><div class="line">curl -X POST //dnsapi.cn/Record.Ddns <span class="_">-d</span> <span class="string">'login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135&amp;record_id=126112527&amp;record_line=默认&amp;sub_domain=proxy'</span></div><div class="line"></div><div class="line"><span class="comment">## 修改 proxy.barretlee.com 域名对应的 A 记录</span></div><div class="line">curl -X POST //dnsapi.cn/Record.Modify <span class="_">-d</span> <span class="string">'login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135&amp;record_id=126112527&amp;sub_domain=proxy&amp;record_line=默认&amp;record_type=A&amp;value=YOUR_LOCAL_IP'</span></div></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line"><span class="comment">## 查询 proxy.barretlee.com 域名对应的 A 记录</span></div><div class="line">curl -X POST /<span class="regexp">/dnsapi.cn/</span>Record.Ddns -d <span class="string">'login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135&amp;record_id=126112527&amp;record_line=默认&amp;sub_domain=proxy'</span></div><div class="line"></div><div class="line"><span class="comment">## 修改 proxy.barretlee.com 域名对应的 A 记录</span></div><div class="line">curl -X POST /<span class="regexp">/dnsapi.cn/</span>Record.Modify -d <span class="string">'login_email=YOUR_REGISTER_EMAIL&amp;login_password=YOUR_PASSWORD&amp;format=json&amp;domain_id=25348135&amp;record_id=126112527&amp;sub_domain=proxy&amp;record_line=默认&amp;record_type=A&amp;value=YOUR_LOCAL_IP'</span></div></pre></td></tr></table></figure>
 <p>前两个请求是 GET 方式，而这里的请求是 POST 方式，具体文档在 <a href="http://www.dnspod.cn/docs/records.html#record-modify" target="_blank" rel="external">这里</a>。有人用 <a href="//gist.github.com/chuangbo/833369">python</a> 和 <a href="//github.com/William-Sang/ddns">php</a> 都写了工具，我就没有重复早轮了，后面 php 那个稍微靠谱点，但是查询本地外网 IP 用了他自己提供的服务，我做了点修改（改成使用 ipinfo.io 提供的服务，稍微靠谱点），可以戳这里：</p>
 <p>Github：<a href="http://github.com/barretlee/ddns" target="_blank" rel="external">http://github.com/barretlee/ddns</a></p>
 <p><strong>3. 定时推</strong></p>
 <p>前文提到，IP 是会变化的，为了保证 proxy.barretlee.com 能够准确解析到本机，IP 变化的时候需要快速更新 A 记录，为了简洁，可以设置定时任务，每隔 1 分钟推送一次：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 执行</span></div><div class="line">crontab <span class="_">-e</span> </div><div class="line"><span class="comment"># 写入任务</span></div><div class="line">* * * * * php path/to/ddns/index.php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 执行</span></div><div class="line">crontab -e </div><div class="line"><span class="comment"># 写入任务</span></div><div class="line">* * * * * php path/to/ddns/index.php</div></pre></td></tr></table></figure>
 <p>使用 crontab 创建一个定时任务，实时推送。可以通过 <code>crontab -l</code> 查看任务列表。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 验证效果</span></div><div class="line">ping proxy.barretlee.com</div></pre></td></tr></table></figure>
 <p>以上就能够通过 proxy.barretlee.com 获取到家里机器的 IP 地址了。需要注意的是，你们家电信宽带服务可能并不是通过路由拨号上网的，当你访问 proxy.barretlee.com 或者拿到的 IP 时，你会看到如下登录提示：</p>
@@ -143,7 +143,7 @@
     </div>
     
 <div class="old-article-warning">
-	本文在 <b>578</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	本文在 <b>662</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
 	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
 </div>
 
@@ -393,7 +393,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmltm00mjkjbormpx0kv6" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8gi00monzbo2gnjdvai" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

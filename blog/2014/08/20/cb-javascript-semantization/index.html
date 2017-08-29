@@ -97,13 +97,13 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 提取常量</span></div><div class="line"><span class="keyword">var</span> isCss = <span class="regexp">/.*\.css(?=\?|$)/</span>;</div><div class="line">isCss.test(<span class="string">"/path/to/main.css"</span>);</div></pre></td></tr></table></figure>
 <p class="p2">不管 isCss 这个正则代码有多长，当我们看到 isCss 这个单词就可以顾名思义。很多人写正则都不会将正则单独提取出来使用某个有意义的变量去存储，加注释还好，要是不加注释，后续开发者就只能硬着头皮看懂正则去理解代码的含义。</p><br><p class="p2">这样的处理，实际上是增加了代码量，不过从工程角度去审视，有助于提高开发效率以及代码的组织性。</p><br><p class="p2"><strong>2. 语义化行为</strong></p>
 
-<figure class="highlight maxima"><table><tr><td class="code"><pre><div class="line"><span class="built_in">var</span> Queue = [<span class="string">"test1"</span>, <span class="string">"test2"</span>, <span class="string">"test3"</span>];</div><div class="line">Queue.<span class="built_in">splice</span>(<span class="number">0</span>, Queue.<span class="built_in">length</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line">var<span class="built_in"> Queue </span>= [<span class="string">"test1"</span>, <span class="string">"test2"</span>, <span class="string">"test3"</span>];</div><div class="line">Queue.splice(0, Queue.length);</div></pre></td></tr></table></figure>
 <p class="p2">上面代码具有很强的语义性，从索引为 0 的地方开始，直到队列最后，删除 Queue 中所有的 item。这种写法的扩展性也更好：</p>
 
 <figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">Queue.splice(<span class="number">2</span>, <span class="number">4</span>); <span class="comment">// 删除从索引为 2，往后的 4 个元素</span></div></pre></td></tr></table></figure>
 <p class="p2">这只是个小例子，有些行为是需要很多代码组合处理的，如果没有很好的组合同一行为的代码，整个结构就显得十分涣散，不利于阅读。</p>
 
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 注册</span></div><div class="line"><span class="keyword">var</span> repos = [];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">(o)</span><span class="comment">&#123;</span></span></div><div class="line">   repos[o.name] = o;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="title">register</span><span class="params">(&#123;</span></div><div class="line">  <span class="keyword">name</span>: "a",</div><div class="line">  content: &#123;&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 注册</span></div><div class="line"><span class="keyword">var</span> repos = [];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">(o)</span><span class="comment">&#123;</span></span></div><div class="line">   repos[o.name] = o;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="title">register</span><span class="params">(<span class="comment">&#123;</span></span></div><div class="line">  name: "a",</div><div class="line">  content: &#123;&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p class="p2">对比我们之前</p>
 
 <figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">repos[<span class="string">"a"</span>] = &#123;</div><div class="line"><span class="symbol">   name:</span> <span class="string">"a"</span>,</div><div class="line"><span class="symbol">   content:</span> &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
@@ -357,7 +357,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmloy00f9kjbofexnrw89" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8bk00f4nzbobr2co7gv" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

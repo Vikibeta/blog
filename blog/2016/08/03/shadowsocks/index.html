@@ -90,11 +90,11 @@
 <p>Shadowsocks 封装后对用户而言就是一个程序指令，以 Ubuntu 为例，首先安装 pip，</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">apt-get install python-pip</div><div class="line">pip install shadowsocks</div></pre></td></tr></table></figure>
 <p>注意 pip 的安装现在要求 python 版本大于等于 2.6，然后通过 pip 安装 shadowsocks。启动 shadowsocks 有两种方式，一种是通过一行命令直接启动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -p PORT -k PASSWORD -m rc4-md5 --log-file /tmp/ss.log <span class="_">-d</span> start</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -p PORT -k PASSWORD -m rc4-md5 --<span class="built_in">log</span>-file /tmp/ss.log -d start</div></pre></td></tr></table></figure>
 <p>另一种是使用 config 文件启动，如先配置好文件（/etc/shadowsocks.json）：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"server"</span>: <span class="string">"YOUR_SERVER_IP"</span>,</div><div class="line">  <span class="attr">"server_port"</span>: <span class="number">8388</span>,  </div><div class="line">  <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,  </div><div class="line">  <span class="attr">"local_port"</span>: <span class="number">1080</span>,  </div><div class="line">  <span class="attr">"password"</span>: <span class="string">"PASSWORD"</span>,</div><div class="line">  <span class="attr">"timeout"</span>: <span class="number">300</span>,  </div><div class="line">  <span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后通过 ssserver 启动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json <span class="_">-d</span> start</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json -d start</div></pre></td></tr></table></figure>
 <p>更加具体的配置说明，请戳 <a href="https://github.com/breakwa11/shadowsocks-rss/wiki/config.json" target="_blank" rel="external">这里</a> 和 <a href="https://github.com/breakwa11/shadowsocks-rss/wiki/Server-Setup" target="_blank" rel="external">这里</a>。</p>
 <p><strong>3. 客户端配置</strong></p>
 <p>Mac 客户端的下载地址：</p>
@@ -114,7 +114,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">iptables -A INPUT -p tcp --dport 8388 -j ACCEPT</div></pre></td></tr></table></figure>
 <p>执行上述命令，将 8388 修改为你设定的端口即可。</p>
 <p><strong>2.如果第一步中连接正常，可以查看下 ss-server 的日志</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json --log-file /tmp/ss.log <span class="_">-d</span> start</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json --<span class="built_in">log</span>-file /tmp/ss.log -d start</div></pre></td></tr></table></figure>
 <p>启动的时候添加 <code>--log-file</code> 参数，然后通过 <code>tail -f /tmp/ss.log</code> 查看实时日志，一般可以看出一点端倪。</p>
 <p>本文的普及就到这里了，希望对你有些帮助。</p>
 
@@ -367,7 +367,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmlwl00qrkjbopf6df2tf" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8k300qwnzbogavkozbz" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>

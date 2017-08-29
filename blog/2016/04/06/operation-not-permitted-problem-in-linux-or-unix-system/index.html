@@ -80,7 +80,7 @@
 <p>好几次整理移动硬盘数据的时候，都遇到了 <code>Operation Not Permitted</code> 问题，文件移动不了，也删除不掉，第一次遇到没理会，第二次是打开虚拟机，在 Windows 中操作这些问题文件，今天又遇到了，决定消灭它。</p>
 <h3 id="OS-X-EI-Capitan-的-SIP"><a href="#OS-X-EI-Capitan-的-SIP" class="headerlink" title="OS X EI Capitan 的 SIP"></a>OS X EI Capitan 的 SIP</h3><p>Apple 在 OS X 10.11 以后的版本中默认启动了一项系统保护程序，叫做 System Integrity Protection，也被唤作 rootless（寓意让 root 弱一点），该程序意在保护电脑不被恶意程序攻击，但是对于我们这群程序员，很多保护是多余的，甚至给我们带来了很多麻烦。</p>
 <p>SIP 会锁定几个系统文件目录：</p>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">/<span class="keyword">System</span></div><div class="line">/sbin</div><div class="line">/usr （/usr/<span class="keyword">local</span> 除外）</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><div class="line"><span class="built_in">/System</span></div><div class="line">/sbin</div><div class="line">/usr （/usr/local 除外）</div></pre></td></tr></table></figure>
 <p>在 SIP 的保护下，部分软件、功能、脚本都会失效，我们可以通过如下步骤关闭 SIP：</p>
 <ul>
 <li>重启电脑，按下 <code>Command + R</code> 直到听到开机声音，此时电脑会进入恢复模式（Recovery Mode）</li>
@@ -93,7 +93,7 @@
 <h3 id="Linux-下的-file-flags"><a href="#Linux-下的-file-flags" class="headerlink" title="Linux 下的 file flags"></a>Linux 下的 file flags</h3><p>可能你也遇到过在 Linux 下删除文件报错：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">root@ubuntu:/home/barret/work<span class="comment"># rm -f 1.md </span></div><div class="line">rm: cannot remove ‘1.md’: Operation not permitted</div></pre></td></tr></table></figure>
 <p>这个时候可以通过 <code>lsattr</code> 命令看看该文件是否被打了 flags：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">root@ubuntu:/home/barret/work<span class="comment"># lsattr 1.md</span></div><div class="line">----i-------<span class="_">-e</span>-- ./1.md</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">root@ubuntu:/home/barret/work<span class="comment"># lsattr 1.md</span></div><div class="line">----i--------e-- ./1.md</div></pre></td></tr></table></figure>
 <p>如果文件上存在 <code>i</code> 标记，那肯定是删不掉的，同样这个文件也不能被编辑。可以进入 root 模式，去除这个标记：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">root@ubuntu:/home/barret/work<span class="comment"># chattr -i 1.md</span></div></pre></td></tr></table></figure>
 <p>给保护文件添加标记的方式：</p>
@@ -104,6 +104,11 @@
       </div>
     </div>
     
+<div class="old-article-warning">
+	本文在 <b>511</b> 天之前发表，技术更替飞快，文中部分内容可能已经过时，如有疑问，
+	请在下方留言，或者联系 <a href="/about">小胡子哥</a>。
+</div>
+
     <div class="follow-wechat"><img src="/follow.jpg"></div>
 
 <div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
@@ -350,7 +355,7 @@ window.changyan.api.config({
 </div>
 			
 <div class="website-info" aria-hidden="true">
-	<a class="page_editor" href="/admin/#/posts/cj3mdmluu00ohkjbo7i8wn09v" target="_blank">🙈</a>
+	<a class="page_editor" href="/admin/#/posts/cj6xmt8ik00otnzbo9u8fxhkx" target="_blank">🙈</a>
 	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
 	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
 </div>
